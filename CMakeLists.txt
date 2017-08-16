@@ -4,6 +4,11 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -m32")
+
+set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
+list(INSERT CMAKE_SYSTEM_LIBRARY_PATH 0 /usr/local/lib32 /usr/lib32 /lib32)
+list(REMOVE_ITEM CMAKE_SYSTEM_LIBRARY_PATH /usr/local/lib /usr/lib /lib)
 
 find_package(Threads REQUIRED)
 find_package(OpenAL REQUIRED)
@@ -258,7 +263,7 @@ add_library(
         sound_oal/sound.h
 )
 target_include_directories(doomlib PRIVATE "${PROJECT_SOURCE_DIR}/sys/linux/oss/include" ${SDL2_INCLUDE_DIR} ${FLITE_INCLUDE_DIR})
-target_link_libraries(doomlib idlib ${SDL2_LIBRARY} ${FLITE_LIBRARIES} flite_cmu_us_rms flite_usenglish flite_cmulex)
+target_link_libraries(doomlib idlib ${SDL2_LIBRARY} ${FLITE_LIBRARY} ${FLITE_CMU_US_RMS_LIBRARY} ${FLITE_USENGLISH_LIBRARY} ${FLITE_CMULEX_LIBRARY})
 
 add_library(
         typeinfo
