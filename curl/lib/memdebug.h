@@ -2,10 +2,10 @@
 #ifndef _CURL_MEDEBUG_H
 #define _CURL_MEDEBUG_H
 /***************************************************************************
- *                                  _   _ ____  _     
- *  Project                     ___| | | |  _ \| |    
- *                             / __| | | | |_) | |    
- *                            | (__| |_| |  _ <| |___ 
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
  * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
@@ -13,7 +13,7 @@
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
  * are also available at http://curl.haxx.se/docs/copyright.html.
- * 
+ *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
  * furnished to do so, under the terms of the COPYING file.
@@ -57,7 +57,7 @@ void curl_memdebug(const char *logname);
 void curl_memlimit(long limit);
 
 /* file descriptor manipulators */
-int curl_socket(int domain, int type, int protocol, int line , const char *);
+int curl_socket(int domain, int type, int protocol, int line, const char *);
 int curl_sclose(int sockfd, int, const char *source);
 int curl_accept(int s, void *addr, void *addrlen,
                 int line, const char *source);

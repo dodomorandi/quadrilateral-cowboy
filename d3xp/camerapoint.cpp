@@ -8,83 +8,83 @@
 const idEventDef EV_setcamerapointvisibility(		"setcamerapointvisibility", "d" );
 
 CLASS_DECLARATION( idEntity, idCameraPoint )
-	EVENT( EV_setcamerapointvisibility,		idCameraPoint::Event_setcamerapointvisibility)
-	
+EVENT( EV_setcamerapointvisibility,		idCameraPoint::Event_setcamerapointvisibility)
+
 END_CLASS
 
 void idCameraPoint::Save( idSaveGame *savefile ) const
 {
-	savefile->WriteBool(snapped);
-	savefile->WriteObject(arrowModel);
+    savefile->WriteBool(snapped);
+    savefile->WriteObject(arrowModel);
 }
 
 void idCameraPoint::Restore( idRestoreGame *savefile )
 {
-	savefile->ReadBool(snapped);
-	savefile->ReadObject(reinterpret_cast<idClass *&>(arrowModel));
+    savefile->ReadBool(snapped);
+    savefile->ReadObject(reinterpret_cast<idClass *&>(arrowModel));
 }
 
 void idCameraPoint::Spawn( void )
 {
-	this->GetPhysics()->SetContents(0);
-	snapped = false;
+    this->GetPhysics()->SetContents(0);
+    snapped = false;
 
-	renderEntity.weaponDepthHack = true;
-
-
-	idDict args;
-	args.Clear();
-	args.SetVector( "origin", this->GetPhysics()->GetOrigin() );
-	args.Set( "model", "models/camerapoint_arrow/tris.ase" );
-	args.SetInt( "solid", 0 );
-	arrowModel = gameLocal.SpawnEntityType( idStaticEntity::Type, &args );
-	arrowModel->GetRenderEntity()->weaponDepthHack = true;
-	arrowModel->Bind(this, false);
+    renderEntity.weaponDepthHack = true;
 
 
-	BecomeActive( TH_THINK );
+    idDict args;
+    args.Clear();
+    args.SetVector( "origin", this->GetPhysics()->GetOrigin() );
+    args.Set( "model", "models/camerapoint_arrow/tris.ase" );
+    args.SetInt( "solid", 0 );
+    arrowModel = gameLocal.SpawnEntityType( idStaticEntity::Type, &args );
+    arrowModel->GetRenderEntity()->weaponDepthHack = true;
+    arrowModel->Bind(this, false);
+
+
+    BecomeActive( TH_THINK );
 }
 
 void idCameraPoint::SetSnapped()
 {
-	SetSkin(declManager->FindSkin("skins/camerapoint/dotted"));
+    SetSkin(declManager->FindSkin("skins/camerapoint/dotted"));
 
-	arrowModel->Hide();
-	snapped = true;
+    arrowModel->Hide();
+    snapped = true;
 }
 
 void idCameraPoint::SetHover(int value)
 {
-	if (value > 0)
-	{
-		SetSkin(declManager->FindSkin("skins/camerapoint/hover"));
-		arrowModel->SetSkin(declManager->FindSkin("skins/camerapoint_arrow/green"));
-	}
-	else
-	{
-		SetSkin(declManager->FindSkin("skins/camerapoint/skin"));
-		arrowModel->SetSkin(declManager->FindSkin("skins/camerapoint_arrow/skin"));
-	}
+    if (value > 0)
+    {
+        SetSkin(declManager->FindSkin("skins/camerapoint/hover"));
+        arrowModel->SetSkin(declManager->FindSkin("skins/camerapoint_arrow/green"));
+    }
+    else
+    {
+        SetSkin(declManager->FindSkin("skins/camerapoint/skin"));
+        arrowModel->SetSkin(declManager->FindSkin("skins/camerapoint_arrow/skin"));
+    }
 }
 
 void idCameraPoint::Event_setcamerapointvisibility( int value)
 {
-	if (value <= 0)
-	{
-		//hide it.
-		arrowModel->Hide();
-		this->Hide();
-		return;
-	}
+    if (value <= 0)
+    {
+        //hide it.
+        arrowModel->Hide();
+        this->Hide();
+        return;
+    }
 
-	//else, show it.
+    //else, show it.
 
-	this->Show();
+    this->Show();
 
-	if (snapped)
-		return;
+    if (snapped)
+        return;
 
-	arrowModel->Show(); //but only show arrow if pic hasnt been snapped yet.
+    arrowModel->Show(); //but only show arrow if pic hasnt been snapped yet.
 }
 
 /*

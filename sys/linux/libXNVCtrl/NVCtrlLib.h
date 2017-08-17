@@ -126,7 +126,7 @@ Bool XNVCTRLQueryValidAttributeValues (
     Display *dpy,
     int screen,
     unsigned int display_mask,
-    unsigned int attribute,                                 
+    unsigned int attribute,
     NVCTRLAttributeValidValuesRec *values
 );
 
@@ -155,7 +155,8 @@ Bool XNVCtrlSelectNotify (
  * XNVCtrlEvent structure
  */
 
-typedef struct {
+typedef struct
+{
     int type;
     unsigned long serial;
     Bool send_event;  /* always FALSE, we don't allow send_events */
@@ -167,7 +168,8 @@ typedef struct {
     int value;
 } XNVCtrlAttributeChangedEvent;
 
-typedef union {
+typedef union
+{
     int type;
     XNVCtrlAttributeChangedEvent attribute_changed;
     long pad[24];

@@ -1,10 +1,10 @@
 #ifndef __SECURITY_H
 #define __SECURITY_H
 /***************************************************************************
- *                                  _   _ ____  _     
- *  Project                     ___| | | |  _ \| |    
- *                             / __| | | | |_) | |    
- *                            | (__| |_| |  _ <| |___ 
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
  * Copyright (C) 1998 - 2004, Daniel Stenberg, <daniel@haxx.se>, et al.
@@ -12,7 +12,7 @@
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
  * are also available at http://curl.haxx.se/docs/copyright.html.
- * 
+ *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
  * furnished to do so, under the terms of the COPYING file.
@@ -28,16 +28,17 @@
 #include <stdarg.h>
 #include "urldata.h"  /* for struct connectdata * */
 
-struct Curl_sec_client_mech {
-  const char *name;
-  size_t size;
-  int (*init)(void *);
-  int (*auth)(void *, struct connectdata *);
-  void (*end)(void *);
-  int (*check_prot)(void *, int);
-  int (*overhead)(void *, int, int);
-  int (*encode)(void *, void*, int, int, void**, struct connectdata *);
-  int (*decode)(void *, void*, int, int, struct connectdata *);
+struct Curl_sec_client_mech
+{
+    const char *name;
+    size_t size;
+    int (*init)(void *);
+    int (*auth)(void *, struct connectdata *);
+    void (*end)(void *);
+    int (*check_prot)(void *, int);
+    int (*overhead)(void *, int, int);
+    int (*encode)(void *, void*, int, int, void**, struct connectdata *);
+    int (*decode)(void *, void*, int, int, struct connectdata *);
 };
 
 
@@ -67,6 +68,6 @@ void Curl_sec_set_protection_level(struct connectdata *conn);
 void Curl_sec_status (void);
 
 enum protection_level Curl_set_command_prot(struct connectdata *,
-                                            enum protection_level);
+        enum protection_level);
 
 #endif

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,22 +30,23 @@ void		Eclass_InitForSourceDirectory( const char *path );
 eclass_t *	Eclass_ForName( const char *name, bool has_brushes );
 bool		Eclass_hasModel(eclass_t *e, idVec3 &vMin, idVec3 &vMax);
 
-typedef struct entity_s {
-	struct entity_s	*prev, *next;
-	brush_t		brushes;					// head/tail of list
-	int			undoId, redoId, entityId;	// used for undo/redo
-	idVec3		origin;
-	qhandle_t	lightDef;
-	qhandle_t	modelDef;
-	idSoundEmitter *soundEmitter;
-	eclass_t *	eclass;
-	idDict		epairs;
-	eclass_t *	md3Class;
-	idMat3		rotation;
-	idVec3 		lightOrigin;		// for lights that have been combined with models
-	idMat3		lightRotation;		// ''
-	bool		trackLightOrigin;	
-	idCurve<idVec3> *curve;
+typedef struct entity_s
+{
+    struct entity_s	*prev, *next;
+    brush_t		brushes;					// head/tail of list
+    int			undoId, redoId, entityId;	// used for undo/redo
+    idVec3		origin;
+    qhandle_t	lightDef;
+    qhandle_t	modelDef;
+    idSoundEmitter *soundEmitter;
+    eclass_t *	eclass;
+    idDict		epairs;
+    eclass_t *	md3Class;
+    idMat3		rotation;
+    idVec3 		lightOrigin;		// for lights that have been combined with models
+    idMat3		lightRotation;		// ''
+    bool		trackLightOrigin;
+    idCurve<idVec3> *curve;
 } entity_t;
 
 void		ParseEpair(idDict *dict);

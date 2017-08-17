@@ -2,26 +2,26 @@
 class idTableFold : public idAnimatedEntity
 {
 public:
-							CLASS_PROTOTYPE( idTableFold );
+    CLASS_PROTOTYPE( idTableFold );
 
-	//void					Think( void );
-	void					Spawn( void );
-	void					OnFrob( idEntity* activator );
+    //void					Think( void );
+    void					Spawn( void );
+    void					OnFrob( idEntity* activator );
 
 private:
 
-	enum					{ CLOSED, OPENED };
-	int						state;
+    enum					{ CLOSED, OPENED };
+    int						state;
 
 
-	void					Event_reset( void );
-	void					Event_open( bool value );
+    void					Event_reset( void );
+    void					Event_open( bool value );
 
 
-	idEntity*				frobcube;
-	idEntity*				frobcube_handle;
+    idEntity*				frobcube;
+    idEntity*				frobcube_handle;
 
-	idMover *				mover;
+    idMover *				mover;
 };
 
 

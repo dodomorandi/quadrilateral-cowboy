@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,40 +33,40 @@ If you have questions concerning this license or the applicable additional terms
 #include "GEInsertModifier.h"
 
 rvGEInsertModifier::rvGEInsertModifier ( const char* name, idWindow* window, idWindow* parent, idWindow* before ) :
-	rvGEModifier ( name, window )
+    rvGEModifier ( name, window )
 {
-	mParent  = parent;
-	mBefore  = before;
+    mParent  = parent;
+    mBefore  = before;
 
-	assert ( mParent );
+    assert ( mParent );
 
-	mUndoParent = window->GetParent ( );
-	mUndoBefore = NULL;	
-	mUndoRect   = mWrapper->GetClientRect ( );
-	mRect		= mWrapper->GetClientRect ( );
-		
-	// Find the child window the window being inserted is before
-	if ( mUndoParent )
-	{
-		int				   index;
-		rvGEWindowWrapper* pwrapper;
-		
-		pwrapper = rvGEWindowWrapper::GetWrapper ( mUndoParent );
-		
-		index = mUndoParent->GetChildIndex ( mWindow );
-		
-		if ( index + 1 < pwrapper->GetChildCount ( ) )
-		{
-			mUndoBefore = pwrapper->GetChild ( index + 1 );
-		}
-	}		
+    mUndoParent = window->GetParent ( );
+    mUndoBefore = NULL;
+    mUndoRect   = mWrapper->GetClientRect ( );
+    mRect		= mWrapper->GetClientRect ( );
 
-	// Since rectangles are relative to the parent rectangle we need to figure
-	// out the new x and y coordinate as if this window were a child 
-	rvGEWindowWrapper* parentWrapper;		
-	parentWrapper = rvGEWindowWrapper::GetWrapper ( mParent );
-	mRect.x = mWrapper->GetScreenRect( )[0] - parentWrapper->GetScreenRect()[0];
-	mRect.y = mWrapper->GetScreenRect( )[1] - parentWrapper->GetScreenRect()[1];
+    // Find the child window the window being inserted is before
+    if ( mUndoParent )
+    {
+        int				   index;
+        rvGEWindowWrapper* pwrapper;
+
+        pwrapper = rvGEWindowWrapper::GetWrapper ( mUndoParent );
+
+        index = mUndoParent->GetChildIndex ( mWindow );
+
+        if ( index + 1 < pwrapper->GetChildCount ( ) )
+        {
+            mUndoBefore = pwrapper->GetChild ( index + 1 );
+        }
+    }
+
+    // Since rectangles are relative to the parent rectangle we need to figure
+    // out the new x and y coordinate as if this window were a child
+    rvGEWindowWrapper* parentWrapper;
+    parentWrapper = rvGEWindowWrapper::GetWrapper ( mParent );
+    mRect.x = mWrapper->GetScreenRect( )[0] - parentWrapper->GetScreenRect()[0];
+    mRect.y = mWrapper->GetScreenRect( )[1] - parentWrapper->GetScreenRect()[1];
 }
 
 /*
@@ -79,15 +79,15 @@ inserting it as a child of the new parent
 */
 bool rvGEInsertModifier::Apply ( void )
 {
-	if ( mUndoParent )
-	{
-		mUndoParent->RemoveChild ( mWindow );
-	}
-	
-	mParent->InsertChild ( mWindow, mBefore );
-	mWrapper->SetRect ( mRect );
-	
-	return true;
+    if ( mUndoParent )
+    {
+        mUndoParent->RemoveChild ( mWindow );
+    }
+
+    mParent->InsertChild ( mWindow, mBefore );
+    mWrapper->SetRect ( mRect );
+
+    return true;
 }
 
 /*
@@ -100,14 +100,14 @@ added to and re-inserting it back into its original parent
 */
 bool rvGEInsertModifier::Undo ( void )
 {
-	mParent->RemoveChild ( mWindow );
-	
-	if ( mUndoParent )
-	{
-		mUndoParent->InsertChild ( mWindow, mUndoBefore );
-		mWrapper->SetRect ( mUndoRect );
-	}
-	
-	return true;
+    mParent->RemoveChild ( mWindow );
+
+    if ( mUndoParent )
+    {
+        mUndoParent->InsertChild ( mWindow, mUndoBefore );
+        mWrapper->SetRect ( mUndoRect );
+    }
+
+    return true;
 }
 

@@ -9,7 +9,7 @@
 
 CLASS_DECLARATION( idEntity, idJellyPoint )
 
-	
+
 END_CLASS
 
 

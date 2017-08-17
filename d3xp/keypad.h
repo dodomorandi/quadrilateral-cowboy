@@ -2,44 +2,44 @@
 class idKeypad : public idAnimatedEntity
 {
 public:
-	CLASS_PROTOTYPE( idKeypad );
+    CLASS_PROTOTYPE( idKeypad );
 
-	void					Spawn( void );
+    void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+    void					Save( idSaveGame *savefile ) const;
+    void					Restore( idRestoreGame *savefile );
 
 
-	virtual void			Think( void );	
+    virtual void			Think( void );
 
-	void					OnFrob( idEntity* activator );
+    void					OnFrob( idEntity* activator );
 
 private:
 
-	enum					{ OFF, ACTIVE, CONFIRM_SUCCESS, CONFIRM_FAIL, READY_TO_CLOSE };
-	int						state;
+    enum					{ OFF, ACTIVE, CONFIRM_SUCCESS, CONFIRM_FAIL, READY_TO_CLOSE };
+    int						state;
 
-	int						counter;
-	int						nextStateTime;
+    int						counter;
+    int						nextStateTime;
 
-	idEntity*				frobcubeMain;
-	idEntity*				frobcubes[9];
-	const idDeclSkin *		skin_glow[9];
-	int						transitions[9];
+    idEntity*				frobcubeMain;
+    idEntity*				frobcubes[9];
+    const idDeclSkin *		skin_glow[9];
+    int						transitions[9];
 
-	void					GenerateKey( void );
-	void					GenerateDictionary( void );
-	idStrList				keys;
+    void					GenerateKey( void );
+    void					GenerateDictionary( void );
+    idStrList				keys;
 
-	int						keycode[4];
-	int						input[4];
-	int						keyIndex;
+    int						keycode[4];
+    int						input[4];
+    int						keyIndex;
 
-	idEntity*				bluebox;
+    idEntity*				bluebox;
 
-	idStr					GetJointViaIndex( int index );
+    idStr					GetJointViaIndex( int index );
 
-	void					UpdateStates( void );
-	void					Event_keypadopen( int value );
+    void					UpdateStates( void );
+    void					Event_keypadopen( int value );
 
 };

@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,13 +33,13 @@ If you have questions concerning this license or the applicable additional terms
 #include "GEStateModifier.h"
 
 rvGEStateModifier::rvGEStateModifier ( const char* name, idWindow* window, idDict& dict ) :
-	rvGEModifier ( name, window ),
-	mDict ( dict )
+    rvGEModifier ( name, window ),
+    mDict ( dict )
 {
-	mDict.Copy ( dict );
+    mDict.Copy ( dict );
 
-	// Make a copy of the current dictionary
-	mUndoDict.Copy ( mWrapper->GetStateDict() );
+    // Make a copy of the current dictionary
+    mUndoDict.Copy ( mWrapper->GetStateDict() );
 }
 
 /*
@@ -50,8 +50,8 @@ Applys the new state dictionary to the window
 ================
 */
 bool rvGEStateModifier::Apply ( void )
-{	
-	return SetState ( mDict );
+{
+    return SetState ( mDict );
 }
 
 /*
@@ -63,7 +63,7 @@ Applies the undo dictionary to the window
 */
 bool rvGEStateModifier::Undo ( void )
 {
-	return SetState ( mUndoDict );
+    return SetState ( mUndoDict );
 }
 
 /*
@@ -75,21 +75,21 @@ Applys the given dictionary to the window
 */
 bool rvGEStateModifier::SetState ( idDict& dict )
 {
-	const idKeyValue*	key;
-	int					i;
-	
-	// Delete any key thats gone in the new dict
-	for ( i = 0; i < mWrapper->GetStateDict().GetNumKeyVals(); i ++ )
-	{
-		key = mWrapper->GetStateDict().GetKeyVal ( i );
-		if ( !key )
-		{
-			continue;
-		}
-	}
-	
-	mWrapper->SetState ( dict );
-	
-	return true;
+    const idKeyValue*	key;
+    int					i;
+
+    // Delete any key thats gone in the new dict
+    for ( i = 0; i < mWrapper->GetStateDict().GetNumKeyVals(); i ++ )
+    {
+        key = mWrapper->GetStateDict().GetKeyVal ( i );
+        if ( !key )
+        {
+            continue;
+        }
+    }
+
+    mWrapper->SetState ( dict );
+
+    return true;
 }
 

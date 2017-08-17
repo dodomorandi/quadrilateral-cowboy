@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ If you have questions concerning this license or the applicable additional terms
 
 rvGEPropertyPage::rvGEPropertyPage ( )
 {
-	mPage = NULL;
+    mPage = NULL;
 }
-	
+
 /*
 ================
 rvGEPropertyPage::WndProc
@@ -47,29 +47,29 @@ Window procedure for the property page class.
 */
 INT_PTR CALLBACK rvGEPropertyPage::WndProc ( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
 {
-	rvGEPropertyPage* page = (rvGEPropertyPage*) GetWindowLong ( hwnd, GWL_USERDATA );
-	
-	// Pages dont get the init dialog since their Init method is called instead
-	if ( msg == WM_INITDIALOG )
-	{
-		PROPSHEETPAGE* psp = (PROPSHEETPAGE*) lParam;
-			
-		page = (rvGEPropertyPage*) psp->lParam;
-		
-		SetWindowLong ( hwnd, GWL_USERDATA, (LONG)page );
-		page->mPage = hwnd;
-		
-		page->Init ( );
-		
-		return FALSE;
-	}
-	else if ( !page )
-	{
-		return FALSE;
-	}
-	
-	// See if the derived class wants to handle the message
-	return page->HandleMessage ( msg, wParam, lParam );
+    rvGEPropertyPage* page = (rvGEPropertyPage*) GetWindowLong ( hwnd, GWL_USERDATA );
+
+    // Pages dont get the init dialog since their Init method is called instead
+    if ( msg == WM_INITDIALOG )
+    {
+        PROPSHEETPAGE* psp = (PROPSHEETPAGE*) lParam;
+
+        page = (rvGEPropertyPage*) psp->lParam;
+
+        SetWindowLong ( hwnd, GWL_USERDATA, (LONG)page );
+        page->mPage = hwnd;
+
+        page->Init ( );
+
+        return FALSE;
+    }
+    else if ( !page )
+    {
+        return FALSE;
+    }
+
+    // See if the derived class wants to handle the message
+    return page->HandleMessage ( msg, wParam, lParam );
 }
 
 /*
@@ -81,30 +81,30 @@ Handles all messages that the base property page must handle.
 */
 int rvGEPropertyPage::HandleMessage ( UINT msg, WPARAM wParam, LPARAM lParam )
 {
-	switch ( msg )
-	{
-		case WM_NOTIFY:
-			switch (((NMHDR FAR *) lParam)->code)
-			{					
-				case PSN_APPLY:		
-					if ( !Apply ( ) )
-					{
-						SetWindowLong ( mPage, DWL_MSGRESULT, PSNRET_INVALID );
-						return TRUE;
-					}
-					break;		
-					
-				case PSN_SETACTIVE:
-					SetActive ( );
-					break;
-					
-				case PSN_KILLACTIVE:
-					KillActive ( );
-					break;	
-			}
-			break;
-	}
-	
-	return FALSE;
+    switch ( msg )
+    {
+    case WM_NOTIFY:
+        switch (((NMHDR FAR *) lParam)->code)
+        {
+        case PSN_APPLY:
+            if ( !Apply ( ) )
+            {
+                SetWindowLong ( mPage, DWL_MSGRESULT, PSNRET_INVALID );
+                return TRUE;
+            }
+            break;
+
+        case PSN_SETACTIVE:
+            SetActive ( );
+            break;
+
+        case PSN_KILLACTIVE:
+            KillActive ( );
+            break;
+        }
+        break;
+    }
+
+    return FALSE;
 }
 

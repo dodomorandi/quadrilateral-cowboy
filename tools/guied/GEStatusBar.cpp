@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@ If you have questions concerning this license or the applicable additional terms
 
 rvGEStatusBar::rvGEStatusBar ( )
 {
-	mSimple = true;
-	mZoom   = 0;
-	mTriangles = 0;
+    mSimple = true;
+    mZoom   = 0;
+    mTriangles = 0;
 }
 
 /*
@@ -47,16 +47,16 @@ Creates a new status bar
 */
 bool rvGEStatusBar::Create ( HWND parent, UINT id, bool visible )
 {
-	mWnd = CreateStatusWindow ( WS_CHILD|WS_VISIBLE|WS_BORDER, "", parent, id );
-	
-	if ( !mWnd )
-	{
-		return false;
-	}
+    mWnd = CreateStatusWindow ( WS_CHILD|WS_VISIBLE|WS_BORDER, "", parent, id );
 
-	Show ( visible );
-	
-	return true;
+    if ( !mWnd )
+    {
+        return false;
+    }
+
+    Show ( visible );
+
+    return true;
 }
 
 /*
@@ -68,9 +68,9 @@ Resizes the status bar and updates the content
 */
 void rvGEStatusBar::Resize ( int width, int height )
 {
-	SendMessage ( mWnd, WM_SIZE, 0, MAKELONG(width,height) );
+    SendMessage ( mWnd, WM_SIZE, 0, MAKELONG(width,height) );
 
-	Update ( );
+    Update ( );
 }
 
 /*
@@ -82,47 +82,47 @@ Updates the status bar by setting up each part's width and text
 */
 void rvGEStatusBar::Update ( void )
 {
-	RECT	rStatus;
-	SIZE	zoomSize;
-	SIZE	trisSize;
-	int		parts[5];	
+    RECT	rStatus;
+    SIZE	zoomSize;
+    SIZE	trisSize;
+    int		parts[5];
 
-	GetWindowRect ( mWnd, &rStatus );
+    GetWindowRect ( mWnd, &rStatus );
 
-	if ( mSimple )
-	{
-		parts[0] = -1;
+    if ( mSimple )
+    {
+        parts[0] = -1;
 
-		SendMessage ( mWnd, SB_SETPARTS, 1, (LONG)parts );	
-		SendMessage ( mWnd, SB_SETTEXT, 1, (LPARAM) "" );
-	}
-	else
-	{
-		zoomSize.cx = 85;
-		trisSize.cx = 65;
+        SendMessage ( mWnd, SB_SETPARTS, 1, (LONG)parts );
+        SendMessage ( mWnd, SB_SETTEXT, 1, (LPARAM) "" );
+    }
+    else
+    {
+        zoomSize.cx = 85;
+        trisSize.cx = 65;
 
-		parts[0] = (rStatus.right - rStatus.left) - zoomSize.cx - trisSize.cx - 40;
-		parts[1] = parts[0] + trisSize.cx;
-		parts[2] = parts[1] + zoomSize.cx;
-		parts[3] = parts[2] + 40;
-		parts[4] = -1;
+        parts[0] = (rStatus.right - rStatus.left) - zoomSize.cx - trisSize.cx - 40;
+        parts[1] = parts[0] + trisSize.cx;
+        parts[2] = parts[1] + zoomSize.cx;
+        parts[3] = parts[2] + 40;
+        parts[4] = -1;
 
-		SendMessage ( mWnd, SB_SETPARTS, 5, (LONG)parts );	
-		SendMessage ( mWnd, SB_SETTEXT, 0, (LPARAM) "" );
-		SendMessage ( mWnd, SB_SETTEXT, 1, (LPARAM) va(" Tris: %d", mTriangles ) );
-		SendMessage ( mWnd, SB_SETTEXT, 2, (LPARAM) va(" Zoom: %d%%", mZoom ) );
-	}
+        SendMessage ( mWnd, SB_SETPARTS, 5, (LONG)parts );
+        SendMessage ( mWnd, SB_SETTEXT, 0, (LPARAM) "" );
+        SendMessage ( mWnd, SB_SETTEXT, 1, (LPARAM) va(" Tris: %d", mTriangles ) );
+        SendMessage ( mWnd, SB_SETTEXT, 2, (LPARAM) va(" Zoom: %d%%", mZoom ) );
+    }
 }
 
 /*
 ================
 rvGEStatusBar::Show
 
-Shows and hides the status bar 
+Shows and hides the status bar
 ================
 */
 void rvGEStatusBar::Show ( bool visible )
 {
-	gApp.GetOptions().SetStatusBarVisible ( visible );				
-	ShowWindow ( mWnd, visible?SW_SHOW:SW_HIDE );
+    gApp.GetOptions().SetStatusBarVisible ( visible );
+    ShowWindow ( mWnd, visible?SW_SHOW:SW_HIDE );
 }

@@ -915,7 +915,7 @@ extern DECLSPEC int SDLCALL SDL_JoystickIsHaptic(SDL_Joystick * joystick);
  *  \sa SDL_HapticClose
  */
 extern DECLSPEC SDL_Haptic *SDLCALL SDL_HapticOpenFromJoystick(SDL_Joystick *
-                                                               joystick);
+        joystick);
 
 /**
  *  \brief Closes a Haptic device previously opened with SDL_HapticOpen().
@@ -993,8 +993,8 @@ extern DECLSPEC int SDLCALL SDL_HapticNumAxes(SDL_Haptic * haptic);
  *  \sa SDL_HapticNewEffect
  */
 extern DECLSPEC int SDLCALL SDL_HapticEffectSupported(SDL_Haptic * haptic,
-                                                      SDL_HapticEffect *
-                                                      effect);
+        SDL_HapticEffect *
+        effect);
 
 /**
  *  \brief Creates a new haptic effect on the device.
@@ -1008,7 +1008,7 @@ extern DECLSPEC int SDLCALL SDL_HapticEffectSupported(SDL_Haptic * haptic,
  *  \sa SDL_HapticDestroyEffect
  */
 extern DECLSPEC int SDLCALL SDL_HapticNewEffect(SDL_Haptic * haptic,
-                                                SDL_HapticEffect * effect);
+        SDL_HapticEffect * effect);
 
 /**
  *  \brief Updates the properties of an effect.
@@ -1028,8 +1028,8 @@ extern DECLSPEC int SDLCALL SDL_HapticNewEffect(SDL_Haptic * haptic,
  *  \sa SDL_HapticDestroyEffect
  */
 extern DECLSPEC int SDLCALL SDL_HapticUpdateEffect(SDL_Haptic * haptic,
-                                                   int effect,
-                                                   SDL_HapticEffect * data);
+        int effect,
+        SDL_HapticEffect * data);
 
 /**
  *  \brief Runs the haptic effect on its associated haptic device.
@@ -1050,8 +1050,8 @@ extern DECLSPEC int SDLCALL SDL_HapticUpdateEffect(SDL_Haptic * haptic,
  *  \sa SDL_HapticGetEffectStatus
  */
 extern DECLSPEC int SDLCALL SDL_HapticRunEffect(SDL_Haptic * haptic,
-                                                int effect,
-                                                Uint32 iterations);
+        int effect,
+        Uint32 iterations);
 
 /**
  *  \brief Stops the haptic effect on its associated haptic device.
@@ -1064,7 +1064,7 @@ extern DECLSPEC int SDLCALL SDL_HapticRunEffect(SDL_Haptic * haptic,
  *  \sa SDL_HapticDestroyEffect
  */
 extern DECLSPEC int SDLCALL SDL_HapticStopEffect(SDL_Haptic * haptic,
-                                                 int effect);
+        int effect);
 
 /**
  *  \brief Destroys a haptic effect on the device.
@@ -1078,7 +1078,7 @@ extern DECLSPEC int SDLCALL SDL_HapticStopEffect(SDL_Haptic * haptic,
  *  \sa SDL_HapticNewEffect
  */
 extern DECLSPEC void SDLCALL SDL_HapticDestroyEffect(SDL_Haptic * haptic,
-                                                     int effect);
+        int effect);
 
 /**
  *  \brief Gets the status of the current effect on the haptic device.
@@ -1093,7 +1093,7 @@ extern DECLSPEC void SDLCALL SDL_HapticDestroyEffect(SDL_Haptic * haptic,
  *  \sa SDL_HapticStopEffect
  */
 extern DECLSPEC int SDLCALL SDL_HapticGetEffectStatus(SDL_Haptic * haptic,
-                                                      int effect);
+        int effect);
 
 /**
  *  \brief Sets the global gain of the device.
@@ -1128,7 +1128,7 @@ extern DECLSPEC int SDLCALL SDL_HapticSetGain(SDL_Haptic * haptic, int gain);
  *  \sa SDL_HapticQuery
  */
 extern DECLSPEC int SDLCALL SDL_HapticSetAutocenter(SDL_Haptic * haptic,
-                                                    int autocenter);
+        int autocenter);
 
 /**
  *  \brief Pauses a haptic device.

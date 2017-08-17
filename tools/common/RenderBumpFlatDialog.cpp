@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -38,73 +38,73 @@ static idStr RBFName;
 
 static bool CheckPow2(int Num)
 {
-	while(Num)
-	{
-		if ((Num & 1) && (Num != 1))
-		{
-			return false;
-		}
+    while(Num)
+    {
+        if ((Num & 1) && (Num != 1))
+        {
+            return false;
+        }
 
-		Num >>= 1;
-	}
+        Num >>= 1;
+    }
 
-	return true;
+    return true;
 }
 
 extern void Com_WriteConfigToFile( const char *filename );
 
-static BOOL CALLBACK RBFProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam) 
-{  
-    switch (message) 
-    { 
-        case WM_INITDIALOG: 
-			SetDlgItemInt(hwndDlg, IDC_RBF_WIDTH, rbfg_DefaultWidth.GetInteger(), FALSE);
-			SetDlgItemInt(hwndDlg, IDC_RBF_HEIGHT, rbfg_DefaultHeight.GetInteger(), FALSE);
-			SetDlgItemText(hwndDlg, IDC_RBF_FILENAME, RBFName);
-            return TRUE; 
- 
-        case WM_COMMAND: 
-            switch (LOWORD(wParam)) 
-            { 
-                case IDOK: 
-					{
-						int		width, height;
+static BOOL CALLBACK RBFProc(HWND hwndDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        SetDlgItemInt(hwndDlg, IDC_RBF_WIDTH, rbfg_DefaultWidth.GetInteger(), FALSE);
+        SetDlgItemInt(hwndDlg, IDC_RBF_HEIGHT, rbfg_DefaultHeight.GetInteger(), FALSE);
+        SetDlgItemText(hwndDlg, IDC_RBF_FILENAME, RBFName);
+        return TRUE;
 
-						width = GetDlgItemInt(hwndDlg, IDC_RBF_WIDTH, 0, FALSE);
-						height = GetDlgItemInt(hwndDlg, IDC_RBF_HEIGHT, 0, FALSE);
+    case WM_COMMAND:
+        switch (LOWORD(wParam))
+        {
+        case IDOK:
+        {
+            int		width, height;
 
-						rbfg_DefaultWidth.SetInteger( width );
-						rbfg_DefaultHeight.SetInteger( height );
+            width = GetDlgItemInt(hwndDlg, IDC_RBF_WIDTH, 0, FALSE);
+            height = GetDlgItemInt(hwndDlg, IDC_RBF_HEIGHT, 0, FALSE);
 
-						Com_WriteConfigToFile( CONFIG_FILE );
+            rbfg_DefaultWidth.SetInteger( width );
+            rbfg_DefaultHeight.SetInteger( height );
 
-						if (!CheckPow2(width) || !CheckPow2(height))
-						{
-							return TRUE;
-						}
+            Com_WriteConfigToFile( CONFIG_FILE );
 
-						DestroyWindow(hwndDlg); 
+            if (!CheckPow2(width) || !CheckPow2(height))
+            {
+                return TRUE;
+            }
 
-						cmdSystem->BufferCommandText( CMD_EXEC_APPEND, va("renderbumpflat -size %d %d %s\n", width, height, RBFName.c_str() ) );
-	                    return TRUE; 
-					}
- 
-                case IDCANCEL: 
-                    DestroyWindow(hwndDlg); 
-                    return TRUE; 
-            } 
+            DestroyWindow(hwndDlg);
+
+            cmdSystem->BufferCommandText( CMD_EXEC_APPEND, va("renderbumpflat -size %d %d %s\n", width, height, RBFName.c_str() ) );
+            return TRUE;
+        }
+
+        case IDCANCEL:
+            DestroyWindow(hwndDlg);
+            return TRUE;
+        }
     }
 
-    return FALSE; 
-} 
+    return FALSE;
+}
 
 void DoRBFDialog(const char *FileName)
 {
-	RBFName = FileName;
+    RBFName = FileName;
 
-	Sys_GrabMouseCursor( false );
+    Sys_GrabMouseCursor( false );
 
-	DialogBox(0, MAKEINTRESOURCE(IDD_RENDERBUMPFLAT), 0, (DLGPROC)RBFProc); 
+    DialogBox(0, MAKEINTRESOURCE(IDD_RENDERBUMPFLAT), 0, (DLGPROC)RBFProc);
 
-	Sys_GrabMouseCursor( true );
+    Sys_GrabMouseCursor( true );
 }

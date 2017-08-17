@@ -132,7 +132,8 @@ struct SDL_SysWMmsg
     union
     {
 #if defined(SDL_VIDEO_DRIVER_WINDOWS)
-        struct {
+        struct
+        {
             HWND hwnd;                  /**< The window for the message */
             UINT msg;                   /**< The type of message */
             WPARAM wParam;              /**< WORD message parameter */
@@ -140,12 +141,14 @@ struct SDL_SysWMmsg
         } win;
 #endif
 #if defined(SDL_VIDEO_DRIVER_X11)
-        struct {
+        struct
+        {
             XEvent event;
         } x11;
 #endif
 #if defined(SDL_VIDEO_DRIVER_DIRECTFB)
-        struct {
+        struct
+        {
             DFBEvent event;
         } dfb;
 #endif
@@ -281,7 +284,7 @@ typedef struct SDL_SysWMinfo SDL_SysWMinfo;
  *  \endcode
  */
 extern DECLSPEC SDL_bool SDLCALL SDL_GetWindowWMInfo(SDL_Window * window,
-                                                     SDL_SysWMinfo * info);
+        SDL_SysWMinfo * info);
 
 
 /* Ends C function definitions when using C++ */

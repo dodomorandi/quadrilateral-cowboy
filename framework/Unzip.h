@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,29 +33,32 @@ If you have questions concerning this license or the applicable additional terms
 #if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
 /* like the STRICT of WIN32, we define a pointer that cannot be converted
     from (void*) without cast */
-typedef struct TagunzFile__ { int unused; } unzFile__; 
+typedef struct TagunzFile__
+{
+    int unused;
+} unzFile__;
 typedef unzFile__ *unzFile;
 #else
 typedef void* unzFile;
 #endif
 
 /* tm_unz contain date/time info */
-typedef struct tm_unz_s 
+typedef struct tm_unz_s
 {
-	unsigned int tm_sec;            /* seconds after the minute - [0,59] */
-	unsigned int tm_min;            /* minutes after the hour - [0,59] */
-	unsigned int tm_hour;           /* hours since midnight - [0,23] */
-	unsigned int tm_mday;           /* day of the month - [1,31] */
-	unsigned int tm_mon;            /* months since January - [0,11] */
-	unsigned int tm_year;           /* years - [1980..2044] */
+    unsigned int tm_sec;            /* seconds after the minute - [0,59] */
+    unsigned int tm_min;            /* minutes after the hour - [0,59] */
+    unsigned int tm_hour;           /* hours since midnight - [0,23] */
+    unsigned int tm_mday;           /* day of the month - [1,31] */
+    unsigned int tm_mon;            /* months since January - [0,11] */
+    unsigned int tm_year;           /* years - [1980..2044] */
 } tm_unz;
 
 /* unz_global_info structure contain global data about the ZIPfile
    These data comes from the end of central dir */
 typedef struct unz_global_info_s
 {
-	unsigned long number_entry;         /* total number of entries in the central dir on this disk */
-	unsigned long size_comment;         /* size of the global comment of the zipfile */
+    unsigned long number_entry;         /* total number of entries in the central dir on this disk */
+    unsigned long size_comment;         /* size of the global comment of the zipfile */
 } unz_global_info;
 
 
@@ -68,8 +71,8 @@ typedef struct unz_file_info_s
     unsigned long compression_method;   /* compression method              2 unsigned chars */
     unsigned long dosDate;              /* last mod file date in Dos fmt   4 unsigned chars */
     unsigned long crc;                  /* crc-32                          4 unsigned chars */
-    unsigned long compressed_size;      /* compressed size                 4 unsigned chars */ 
-    unsigned long uncompressed_size;    /* uncompressed size               4 unsigned chars */ 
+    unsigned long compressed_size;      /* compressed size                 4 unsigned chars */
+    unsigned long uncompressed_size;    /* uncompressed size               4 unsigned chars */
     unsigned long size_filename;        /* filename length                 2 unsigned chars */
     unsigned long size_file_extra;      /* extra field length              2 unsigned chars */
     unsigned long size_file_comment;    /* file comment length             2 unsigned chars */
@@ -92,7 +95,8 @@ typedef void   (*free_func) (void* opaque, void* address);
 
 struct internal_state;
 
-typedef struct z_stream_s {
+typedef struct z_stream_s
+{
     unsigned char    *next_in;  /* next input unsigned char */
     unsigned int     avail_in;  /* number of unsigned chars available at next_in */
     unsigned long    total_in;  /* total nb of input unsigned chars read so */
@@ -120,23 +124,23 @@ typedef z_stream *z_streamp;
     when reading and decompress it */
 typedef struct
 {
-	char  *read_buffer;         /* internal buffer for compressed data */
-	z_stream stream;            /* zLib stream structure for inflate */
+    char  *read_buffer;         /* internal buffer for compressed data */
+    z_stream stream;            /* zLib stream structure for inflate */
 
-	unsigned long pos_in_zipfile;       /* position in unsigned char on the zipfile, for fseek*/
-	unsigned long stream_initialised;   /* flag set if stream structure is initialised*/
+    unsigned long pos_in_zipfile;       /* position in unsigned char on the zipfile, for fseek*/
+    unsigned long stream_initialised;   /* flag set if stream structure is initialised*/
 
-	unsigned long offset_local_extrafield;/* offset of the static extra field */
-	unsigned int  size_local_extrafield;/* size of the static extra field */
-	unsigned long pos_local_extrafield;   /* position in the static extra field in read*/
+    unsigned long offset_local_extrafield;/* offset of the static extra field */
+    unsigned int  size_local_extrafield;/* size of the static extra field */
+    unsigned long pos_local_extrafield;   /* position in the static extra field in read*/
 
-	unsigned long crc32;                /* crc32 of all data uncompressed */
-	unsigned long crc32_wait;           /* crc32 we must obtain after decompress all */
-	unsigned long rest_read_compressed; /* number of unsigned char to be decompressed */
-	unsigned long rest_read_uncompressed;/*number of unsigned char to be obtained after decomp*/
-	FILE* file;                 /* io structore of the zipfile */
-	unsigned long compression_method;   /* compression method (0==store) */
-	unsigned long byte_before_the_zipfile;/* unsigned char before the zipfile, (>0 for sfx)*/
+    unsigned long crc32;                /* crc32 of all data uncompressed */
+    unsigned long crc32_wait;           /* crc32 we must obtain after decompress all */
+    unsigned long rest_read_compressed; /* number of unsigned char to be decompressed */
+    unsigned long rest_read_uncompressed;/*number of unsigned char to be obtained after decomp*/
+    FILE* file;                 /* io structore of the zipfile */
+    unsigned long compression_method;   /* compression method (0==store) */
+    unsigned long byte_before_the_zipfile;/* unsigned char before the zipfile, (>0 for sfx)*/
 } file_in_zip_read_info_s;
 
 
@@ -144,20 +148,20 @@ typedef struct
 */
 typedef struct
 {
-	FILE* file;                 /* io structore of the zipfile */
-	unz_global_info gi;       /* public global information */
-	unsigned long byte_before_the_zipfile;/* unsigned char before the zipfile, (>0 for sfx)*/
-	unsigned long num_file;             /* number of the current file in the zipfile*/
-	unsigned long pos_in_central_dir;   /* pos of the current file in the central dir*/
-	unsigned long current_file_ok;      /* flag about the usability of the current file*/
-	unsigned long central_pos;          /* position of the beginning of the central dir*/
+    FILE* file;                 /* io structore of the zipfile */
+    unz_global_info gi;       /* public global information */
+    unsigned long byte_before_the_zipfile;/* unsigned char before the zipfile, (>0 for sfx)*/
+    unsigned long num_file;             /* number of the current file in the zipfile*/
+    unsigned long pos_in_central_dir;   /* pos of the current file in the central dir*/
+    unsigned long current_file_ok;      /* flag about the usability of the current file*/
+    unsigned long central_pos;          /* position of the beginning of the central dir*/
 
-	unsigned long size_central_dir;     /* size of the central directory  */
-	unsigned long offset_central_dir;   /* offset of start of central directory with
+    unsigned long size_central_dir;     /* size of the central directory  */
+    unsigned long offset_central_dir;   /* offset of start of central directory with
 								   respect to the starting disk number */
 
-	unz_file_info cur_file_info; /* public info about the current file in zip*/
-	unz_file_info_internal cur_file_info_internal; /* private info about it*/
+    unz_file_info cur_file_info; /* public info about the current file in zip*/
+    unz_file_info_internal cur_file_info_internal; /* private info about it*/
     file_in_zip_read_info_s* pfile_in_zip_read; /* structure about the current
 	                                    file if we are decompressing it */
 } unz_s;
@@ -302,7 +306,7 @@ extern int unzCloseCurrentFile (unzFile file);
   Return UNZ_CRCERROR if all the file was read but the CRC is not good
 */
 
-												
+
 extern int unzReadCurrentFile (unzFile file, void* buf, unsigned len);
 
 /*
@@ -325,7 +329,7 @@ extern long unztell(unzFile file);
 extern int unzeof (unzFile file);
 
 /*
-  return 1 if the end of file was reached, 0 elsewhere 
+  return 1 if the end of file was reached, 0 elsewhere
 */
 
 extern int unzGetLocalExtrafield (unzFile file, void* buf, unsigned len);
@@ -339,7 +343,7 @@ extern int unzGetLocalExtrafield (unzFile file, void* buf, unsigned len);
 
   if buf!=NULL, len is the size of the buffer, the extra header is copied in
 	buf.
-  the return value is the number of unsigned chars copied in buf, or (if <0) 
+  the return value is the number of unsigned chars copied in buf, or (if <0)
 	the error code
 */
 

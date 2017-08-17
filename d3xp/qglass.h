@@ -5,25 +5,25 @@
 class idQGlass : public idEntity
 {
 public:
-							CLASS_PROTOTYPE( idQGlass );
+    CLASS_PROTOTYPE( idQGlass );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
-	void					Spawn( void );
-	void					Event_glassreset( void );
+    void					Save( idSaveGame *savefile ) const;
+    void					Restore( idRestoreGame *savefile );
+    void					Spawn( void );
+    void					Event_glassreset( void );
 
 
 private:
 
-	enum					{ IDLE, DESTROYED };
-	int						state;
-	int						count;
+    enum					{ IDLE, DESTROYED };
+    int						state;
+    int						count;
 
-	idStr					fxFracture;
+    idStr					fxFracture;
 
-	virtual void			AddForce( idEntity *ent, int id, const idVec3 &point, const idVec3 &force );
-	
-	
+    virtual void			AddForce( idEntity *ent, int id, const idVec3 &point, const idVec3 &force );
+
+
 };
 
 

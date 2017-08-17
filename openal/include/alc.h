@@ -9,24 +9,24 @@ extern "C" {
 #endif
 
 #ifdef _WIN32
- #ifdef _OPENAL32LIB
-  #define ALCAPI __declspec(dllexport)
- #else
-  #define ALCAPI __declspec(dllimport)
- #endif
-
- typedef struct ALCdevice_struct ALCdevice;
- typedef struct ALCcontext_struct ALCcontext;
-
- #define ALCAPIENTRY __cdecl
+#ifdef _OPENAL32LIB
+#define ALCAPI __declspec(dllexport)
 #else
- #ifdef TARGET_OS_MAC
-  #if TARGET_OS_MAC
-   #pragma export on
-  #endif
- #endif
- #define ALCAPI
- #define ALCAPIENTRY __cdecl
+#define ALCAPI __declspec(dllimport)
+#endif
+
+typedef struct ALCdevice_struct ALCdevice;
+typedef struct ALCcontext_struct ALCcontext;
+
+#define ALCAPIENTRY __cdecl
+#else
+#ifdef TARGET_OS_MAC
+#if TARGET_OS_MAC
+#pragma export on
+#endif
+#endif
+#define ALCAPI
+#define ALCAPIENTRY __cdecl
 #endif
 
 
@@ -52,7 +52,7 @@ ALCAPI ALCenum	  ALCAPIENTRY alcGetError(ALCdevice *device);
 ALCAPI ALCboolean ALCAPIENTRY alcIsExtensionPresent(ALCdevice *device,ALCubyte *extName);
 ALCAPI ALCvoid *  ALCAPIENTRY alcGetProcAddress(ALCdevice *device,ALCubyte *funcName);
 ALCAPI ALCenum	  ALCAPIENTRY alcGetEnumValue(ALCdevice *device,ALCubyte *enumName);
-				
+
 #else /* ALC_NO_PROTOTYPES */
 
 ALCAPI ALCubyte*  ALCAPIENTRY (*alcGetString)(ALCdevice *device,ALCenum param);
@@ -78,9 +78,9 @@ ALCAPI ALCenum	  ALCAPIENTRY (*alcGetEnumValue)(ALCdevice *device,ALCubyte *enum
 #endif /* AL_NO_PROTOTYPES */
 
 #ifdef TARGET_OS_MAC
- #if TARGET_OS_MAC
-  #pragma export off
- #endif
+#if TARGET_OS_MAC
+#pragma export off
+#endif
 #endif
 
 #ifdef __cplusplus

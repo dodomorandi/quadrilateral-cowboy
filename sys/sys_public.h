@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -67,11 +67,11 @@ If you have questions concerning this license or the applicable additional terms
 #define BUILD_STRING				"MacOSX-universal"
 #define BUILD_OS_ID					1
 #ifdef __ppc__
-	#define	CPUSTRING					"ppc"
-	#define CPU_EASYARGS				0
+#define	CPUSTRING					"ppc"
+#define CPU_EASYARGS				0
 #elif defined(__i386__)
-	#define	CPUSTRING					"x86"
-	#define CPU_EASYARGS				1
+#define	CPUSTRING					"x86"
+#define CPU_EASYARGS				1
 #endif
 
 #define ALIGN16( x )					x __attribute__ ((aligned (16)))
@@ -104,19 +104,19 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef __linux__
 
 #ifdef __i386__
-	#define	BUILD_STRING				"linux-x86"
-	#define BUILD_OS_ID					2
-	#define CPUSTRING					"x86"
-	#define CPU_EASYARGS				1
+#define	BUILD_STRING				"linux-x86"
+#define BUILD_OS_ID					2
+#define CPUSTRING					"x86"
+#define CPU_EASYARGS				1
 #elif __x86_64__
-	#define	BUILD_STRING				"linux-x86_64"
-	#define BUILD_OS_ID					2
-	#define CPUSTRING					"x64"
-	#define CPU_EASYARGS				1
+#define	BUILD_STRING				"linux-x86_64"
+#define BUILD_OS_ID					2
+#define CPUSTRING					"x64"
+#define CPU_EASYARGS				1
 #elif defined(__ppc__)
-	#define	BUILD_STRING				"linux-ppc"
-	#define CPUSTRING					"ppc"
-	#define CPU_EASYARGS				0
+#define	BUILD_STRING				"linux-ppc"
+#define CPUSTRING					"ppc"
+#define CPU_EASYARGS				0
 #endif
 
 #define _alloca							alloca
@@ -141,152 +141,162 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef __GNUC__
 #define id_attribute(x) __attribute__(x)
 #else
-#define id_attribute(x)  
+#define id_attribute(x)
 #endif
 
-typedef enum {
-	CPUID_NONE							= 0x00000,
-	CPUID_UNSUPPORTED					= 0x00001,	// unsupported (386/486)
-	CPUID_GENERIC						= 0x00002,	// unrecognized processor
-	CPUID_INTEL							= 0x00004,	// Intel
-	CPUID_AMD							= 0x00008,	// AMD
-	CPUID_MMX							= 0x00010,	// Multi Media Extensions
-	CPUID_3DNOW							= 0x00020,	// 3DNow!
-	CPUID_SSE							= 0x00040,	// Streaming SIMD Extensions
-	CPUID_SSE2							= 0x00080,	// Streaming SIMD Extensions 2
-	CPUID_SSE3							= 0x00100,	// Streaming SIMD Extentions 3 aka Prescott's New Instructions
-	CPUID_ALTIVEC						= 0x00200,	// AltiVec
-	CPUID_HTT							= 0x01000,	// Hyper-Threading Technology
-	CPUID_CMOV							= 0x02000,	// Conditional Move (CMOV) and fast floating point comparison (FCOMI) instructions
-	CPUID_FTZ							= 0x04000,	// Flush-To-Zero mode (denormal results are flushed to zero)
-	CPUID_DAZ							= 0x08000	// Denormals-Are-Zero mode (denormal source operands are set to zero)
+typedef enum
+{
+    CPUID_NONE							= 0x00000,
+    CPUID_UNSUPPORTED					= 0x00001,	// unsupported (386/486)
+    CPUID_GENERIC						= 0x00002,	// unrecognized processor
+    CPUID_INTEL							= 0x00004,	// Intel
+    CPUID_AMD							= 0x00008,	// AMD
+    CPUID_MMX							= 0x00010,	// Multi Media Extensions
+    CPUID_3DNOW							= 0x00020,	// 3DNow!
+    CPUID_SSE							= 0x00040,	// Streaming SIMD Extensions
+    CPUID_SSE2							= 0x00080,	// Streaming SIMD Extensions 2
+    CPUID_SSE3							= 0x00100,	// Streaming SIMD Extentions 3 aka Prescott's New Instructions
+    CPUID_ALTIVEC						= 0x00200,	// AltiVec
+    CPUID_HTT							= 0x01000,	// Hyper-Threading Technology
+    CPUID_CMOV							= 0x02000,	// Conditional Move (CMOV) and fast floating point comparison (FCOMI) instructions
+    CPUID_FTZ							= 0x04000,	// Flush-To-Zero mode (denormal results are flushed to zero)
+    CPUID_DAZ							= 0x08000	// Denormals-Are-Zero mode (denormal source operands are set to zero)
 } cpuid_t;
 
-typedef enum {
-	FPU_EXCEPTION_INVALID_OPERATION		= 1,
-	FPU_EXCEPTION_DENORMALIZED_OPERAND	= 2,
-	FPU_EXCEPTION_DIVIDE_BY_ZERO		= 4,
-	FPU_EXCEPTION_NUMERIC_OVERFLOW		= 8,
-	FPU_EXCEPTION_NUMERIC_UNDERFLOW		= 16,
-	FPU_EXCEPTION_INEXACT_RESULT		= 32
+typedef enum
+{
+    FPU_EXCEPTION_INVALID_OPERATION		= 1,
+    FPU_EXCEPTION_DENORMALIZED_OPERAND	= 2,
+    FPU_EXCEPTION_DIVIDE_BY_ZERO		= 4,
+    FPU_EXCEPTION_NUMERIC_OVERFLOW		= 8,
+    FPU_EXCEPTION_NUMERIC_UNDERFLOW		= 16,
+    FPU_EXCEPTION_INEXACT_RESULT		= 32
 } fpuExceptions_t;
 
-typedef enum {
-	FPU_PRECISION_SINGLE				= 0,
-	FPU_PRECISION_DOUBLE				= 1,
-	FPU_PRECISION_DOUBLE_EXTENDED		= 2
+typedef enum
+{
+    FPU_PRECISION_SINGLE				= 0,
+    FPU_PRECISION_DOUBLE				= 1,
+    FPU_PRECISION_DOUBLE_EXTENDED		= 2
 } fpuPrecision_t;
 
-typedef enum {
-	FPU_ROUNDING_TO_NEAREST				= 0,
-	FPU_ROUNDING_DOWN					= 1,
-	FPU_ROUNDING_UP						= 2,
-	FPU_ROUNDING_TO_ZERO				= 3
+typedef enum
+{
+    FPU_ROUNDING_TO_NEAREST				= 0,
+    FPU_ROUNDING_DOWN					= 1,
+    FPU_ROUNDING_UP						= 2,
+    FPU_ROUNDING_TO_ZERO				= 3
 } fpuRounding_t;
 
-typedef enum {
-	AXIS_LEFT_X,
-	AXIS_LEFT_Y,
-	AXIS_RIGHT_X,
-	AXIS_RIGHT_Y,
-	AXIS_LEFT_TRIG,
-	AXIS_RIGHT_TRIG,
-	MAX_JOYSTICK_AXIS
+typedef enum
+{
+    AXIS_LEFT_X,
+    AXIS_LEFT_Y,
+    AXIS_RIGHT_X,
+    AXIS_RIGHT_Y,
+    AXIS_LEFT_TRIG,
+    AXIS_RIGHT_TRIG,
+    MAX_JOYSTICK_AXIS
 } joystickAxis_t;
 
-typedef enum {
-	SE_NONE,				// evTime is still valid
-	SE_KEY,					// evValue is a key code, evValue2 is the down flag
-	SE_CHAR,				// evValue is an ascii char
-	SE_MOUSE,				// evValue and evValue2 are reletive signed x / y moves
-	SE_JOYSTICK,			// evValue is an axis number and evValue2 is the current state (-127 to 127)
-	SE_CONSOLE				// evPtr is a char*, from typing something at a non-game console
+typedef enum
+{
+    SE_NONE,				// evTime is still valid
+    SE_KEY,					// evValue is a key code, evValue2 is the down flag
+    SE_CHAR,				// evValue is an ascii char
+    SE_MOUSE,				// evValue and evValue2 are reletive signed x / y moves
+    SE_JOYSTICK,			// evValue is an axis number and evValue2 is the current state (-127 to 127)
+    SE_CONSOLE				// evPtr is a char*, from typing something at a non-game console
 } sysEventType_t;
 
-typedef enum {
-	M_ACTION1,
-	M_ACTION2,
-	M_ACTION3,
-	M_ACTION4,
-	M_ACTION5,
-	M_ACTION6,
-	M_ACTION7,
-	M_ACTION8,
-	M_DELTAX,
-	M_DELTAY,
-	M_DELTAZ
+typedef enum
+{
+    M_ACTION1,
+    M_ACTION2,
+    M_ACTION3,
+    M_ACTION4,
+    M_ACTION5,
+    M_ACTION6,
+    M_ACTION7,
+    M_ACTION8,
+    M_DELTAX,
+    M_DELTAY,
+    M_DELTAZ
 } sys_mEvents;
 
-typedef enum {
-	J_ACTION1,
-	J_ACTION2,
-	J_ACTION3,
-	J_ACTION4,
-	J_ACTION5,
-	J_ACTION6,
-	J_ACTION7,
-	J_ACTION8,
-	J_ACTION9,
-	J_ACTION10,
-	J_ACTION11,
-	J_ACTION12,
-	J_ACTION13,
-	J_ACTION14,
-	J_ACTION15,
-	J_ACTION16,
-	J_ACTION17,
-	J_ACTION18,
-	J_ACTION19,
-	J_ACTION20,
-	J_ACTION21,
-	J_ACTION22,
-	J_ACTION23,
-	J_ACTION24,
-	J_ACTION25,
-	J_ACTION26,
-	J_ACTION27,
-	J_ACTION28,
-	J_ACTION29,
-	J_ACTION30,
-	J_ACTION31,
-	J_ACTION32,
-	J_ACTION_MAX = J_ACTION32,
+typedef enum
+{
+    J_ACTION1,
+    J_ACTION2,
+    J_ACTION3,
+    J_ACTION4,
+    J_ACTION5,
+    J_ACTION6,
+    J_ACTION7,
+    J_ACTION8,
+    J_ACTION9,
+    J_ACTION10,
+    J_ACTION11,
+    J_ACTION12,
+    J_ACTION13,
+    J_ACTION14,
+    J_ACTION15,
+    J_ACTION16,
+    J_ACTION17,
+    J_ACTION18,
+    J_ACTION19,
+    J_ACTION20,
+    J_ACTION21,
+    J_ACTION22,
+    J_ACTION23,
+    J_ACTION24,
+    J_ACTION25,
+    J_ACTION26,
+    J_ACTION27,
+    J_ACTION28,
+    J_ACTION29,
+    J_ACTION30,
+    J_ACTION31,
+    J_ACTION32,
+    J_ACTION_MAX = J_ACTION32,
 
-	J_AXIS_MIN,
-	J_AXIS_LEFT_X = J_AXIS_MIN + AXIS_LEFT_X,
-	J_AXIS_LEFT_Y = J_AXIS_MIN + AXIS_LEFT_Y,
-	J_AXIS_RIGHT_X = J_AXIS_MIN + AXIS_RIGHT_X,
-	J_AXIS_RIGHT_Y = J_AXIS_MIN + AXIS_RIGHT_Y,
-	J_AXIS_LEFT_TRIG = J_AXIS_MIN + AXIS_LEFT_TRIG,
-	J_AXIS_RIGHT_TRIG = J_AXIS_MIN + AXIS_RIGHT_TRIG,
+    J_AXIS_MIN,
+    J_AXIS_LEFT_X = J_AXIS_MIN + AXIS_LEFT_X,
+    J_AXIS_LEFT_Y = J_AXIS_MIN + AXIS_LEFT_Y,
+    J_AXIS_RIGHT_X = J_AXIS_MIN + AXIS_RIGHT_X,
+    J_AXIS_RIGHT_Y = J_AXIS_MIN + AXIS_RIGHT_Y,
+    J_AXIS_LEFT_TRIG = J_AXIS_MIN + AXIS_LEFT_TRIG,
+    J_AXIS_RIGHT_TRIG = J_AXIS_MIN + AXIS_RIGHT_TRIG,
 
-	J_AXIS_MAX = J_AXIS_MIN + MAX_JOYSTICK_AXIS - 1,
+    J_AXIS_MAX = J_AXIS_MIN + MAX_JOYSTICK_AXIS - 1,
 
-	J_DPAD_UP,
-	J_DPAD_DOWN,
-	J_DPAD_LEFT,
-	J_DPAD_RIGHT,
+    J_DPAD_UP,
+    J_DPAD_DOWN,
+    J_DPAD_LEFT,
+    J_DPAD_RIGHT,
 
-	MAX_JOY_EVENT
+    MAX_JOY_EVENT
 } sys_jEvents;
 
-typedef struct sysEvent_s {
-	sysEventType_t	evType;
-	int				evValue;
-	int				evValue2;
-	int				evPtrLength;		// bytes of data pointed to by evPtr, for journaling
-	void *			evPtr;				// this must be manually freed if not NULL
+typedef struct sysEvent_s
+{
+    sysEventType_t	evType;
+    int				evValue;
+    int				evValue2;
+    int				evPtrLength;		// bytes of data pointed to by evPtr, for journaling
+    void *			evPtr;				// this must be manually freed if not NULL
 } sysEvent_t;
 
-typedef struct sysMemoryStats_s {
-	int memoryLoad;
-	int totalPhysical;
-	int availPhysical;
-	int totalPageFile;
-	int availPageFile;
-	int totalVirtual;
-	int availVirtual;
-	int availExtendedVirtual;
+typedef struct sysMemoryStats_s
+{
+    int memoryLoad;
+    int totalPhysical;
+    int availPhysical;
+    int totalPageFile;
+    int availPageFile;
+    int totalVirtual;
+    int availVirtual;
+    int availExtendedVirtual;
 } sysMemoryStats_t;
 
 typedef unsigned long address_t;
@@ -394,7 +404,7 @@ sysEvent_t		Sys_GetEvent( void );
 void			Sys_ClearEvents( void );
 char			*Sys_ConsoleInput( void );
 
-// input is tied to windows, so it needs to be started up and shut down whenever 
+// input is tied to windows, so it needs to be started up and shut down whenever
 // the main window is recreated
 void			Sys_InitInput( void );
 void			Sys_ShutdownInput( void );
@@ -459,72 +469,82 @@ void			Sys_DoPreferences( void );
 ==============================================================
 */
 
-typedef enum {
-	NA_BAD,					// an address lookup failed
-	NA_LOOPBACK,
-	NA_BROADCAST,
-	NA_IP
+typedef enum
+{
+    NA_BAD,					// an address lookup failed
+    NA_LOOPBACK,
+    NA_BROADCAST,
+    NA_IP
 } netadrtype_t;
 
-typedef struct {
-	netadrtype_t	type;
-	unsigned char	ip[4];
-	unsigned short	port;
+typedef struct
+{
+    netadrtype_t	type;
+    unsigned char	ip[4];
+    unsigned short	port;
 } netadr_t;
 
 #define	PORT_ANY			-1
 
-class idPort {
+class idPort
+{
 public:
-				idPort();				// this just zeros netSocket and port
-	virtual		~idPort();
+    idPort();				// this just zeros netSocket and port
+    virtual		~idPort();
 
-	// if the InitForPort fails, the idPort.port field will remain 0
-	bool		InitForPort( int portNumber );
-	int			GetPort( void ) const { return bound_to.port; }
-	netadr_t	GetAdr( void ) const { return bound_to; }
-	void		Close();
+    // if the InitForPort fails, the idPort.port field will remain 0
+    bool		InitForPort( int portNumber );
+    int			GetPort( void ) const
+    {
+        return bound_to.port;
+    }
+    netadr_t	GetAdr( void ) const
+    {
+        return bound_to;
+    }
+    void		Close();
 
-	bool		GetPacket( netadr_t &from, void *data, int &size, int maxSize );
-	bool		GetPacketBlocking( netadr_t &from, void *data, int &size, int maxSize, int timeout );
-	void		SendPacket( const netadr_t to, const void *data, int size );
+    bool		GetPacket( netadr_t &from, void *data, int &size, int maxSize );
+    bool		GetPacketBlocking( netadr_t &from, void *data, int &size, int maxSize, int timeout );
+    void		SendPacket( const netadr_t to, const void *data, int size );
 
-	int			packetsRead;
-	int			bytesRead;
+    int			packetsRead;
+    int			bytesRead;
 
-	int			packetsWritten;
-	int			bytesWritten;
+    int			packetsWritten;
+    int			bytesWritten;
 
 private:
-	netadr_t	bound_to;		// interface and port
-	int			netSocket;		// OS specific socket
+    netadr_t	bound_to;		// interface and port
+    int			netSocket;		// OS specific socket
 };
 
-class idTCP {
+class idTCP
+{
 public:
-				idTCP();
-	virtual		~idTCP();
+    idTCP();
+    virtual		~idTCP();
 
-	// if host is host:port, the value of port is ignored
-	bool		Init( const char *host, short port );
-	void		Close();
+    // if host is host:port, the value of port is ignored
+    bool		Init( const char *host, short port );
+    void		Close();
 
-	// returns -1 on failure (and closes socket)
-	// those are non blocking, can be used for polling
-	// there is no buffering, you are not guaranteed to Read or Write everything in a single call
-	// (specially on win32, see recv and send documentation)
-	int			Read( void *data, int size );
-	int			Write( void *data, int size );
+    // returns -1 on failure (and closes socket)
+    // those are non blocking, can be used for polling
+    // there is no buffering, you are not guaranteed to Read or Write everything in a single call
+    // (specially on win32, see recv and send documentation)
+    int			Read( void *data, int size );
+    int			Write( void *data, int size );
 
 private:
-	netadr_t	address;		// remote address
-	int			fd;				// OS specific socket
+    netadr_t	address;		// remote address
+    int			fd;				// OS specific socket
 };
 
-				// parses the port number
-				// can also do DNS resolve if you ask for it.
-				// NOTE: DNS resolve is a slow/blocking call, think before you use
-				// ( could be exploited for server DoS )
+// parses the port number
+// can also do DNS resolve if you ask for it.
+// NOTE: DNS resolve is a slow/blocking call, think before you use
+// ( could be exploited for server DoS )
 bool			Sys_StringToNetAdr( const char *s, netadr_t *a, bool doDNSResolve );
 const char *	Sys_NetAdrToString( const netadr_t a );
 bool			Sys_IsLANAddress( const netadr_t a );
@@ -544,16 +564,18 @@ void			Sys_ShutdownNetworking( void );
 
 typedef unsigned int (*xthread_t)( void * );
 
-typedef enum {
-	THREAD_NORMAL,
-	THREAD_ABOVE_NORMAL,
-	THREAD_HIGHEST
+typedef enum
+{
+    THREAD_NORMAL,
+    THREAD_ABOVE_NORMAL,
+    THREAD_HIGHEST
 } xthreadPriority;
 
-typedef struct {
-	const char *	name;
-	int				threadHandle;
-	unsigned long	threadId;
+typedef struct
+{
+    const char *	name;
+    int				threadHandle;
+    unsigned long	threadId;
 } xthreadInfo;
 
 const int MAX_THREADS				= 10;
@@ -566,14 +588,15 @@ void				Sys_DestroyThread( xthreadInfo& info ); // sets threadHandle back to 0
 // find the name of the calling thread
 // if index != NULL, set the index in g_threads array (use -1 for "main" thread)
 const char *		Sys_GetThreadName( int *index = 0 );
- 
+
 const int MAX_CRITICAL_SECTIONS		= 4;
 
-enum {
-	CRITICAL_SECTION_ZERO = 0,
-	CRITICAL_SECTION_ONE,
-	CRITICAL_SECTION_TWO,
-	CRITICAL_SECTION_THREE
+enum
+{
+    CRITICAL_SECTION_ZERO = 0,
+    CRITICAL_SECTION_ONE,
+    CRITICAL_SECTION_TWO,
+    CRITICAL_SECTION_THREE
 };
 
 void				Sys_EnterCriticalSection( int index = CRITICAL_SECTION_ZERO );
@@ -581,11 +604,12 @@ void				Sys_LeaveCriticalSection( int index = CRITICAL_SECTION_ZERO );
 
 const int MAX_TRIGGER_EVENTS		= 4;
 
-enum {
-	TRIGGER_EVENT_ZERO = 0,
-	TRIGGER_EVENT_ONE,
-	TRIGGER_EVENT_TWO,
-	TRIGGER_EVENT_THREE
+enum
+{
+    TRIGGER_EVENT_ZERO = 0,
+    TRIGGER_EVENT_ONE,
+    TRIGGER_EVENT_TWO,
+    TRIGGER_EVENT_THREE
 };
 
 void				Sys_WaitForEvent( int index = TRIGGER_EVENT_ZERO );
@@ -599,40 +623,41 @@ void				Sys_TriggerEvent( int index = TRIGGER_EVENT_ZERO );
 ==============================================================
 */
 
-class idSys {
+class idSys
+{
 public:
-	virtual void			DebugPrintf( const char *fmt, ... )id_attribute((format(printf,2,3))) = 0;
-	virtual void			DebugVPrintf( const char *fmt, va_list arg ) = 0;
+    virtual void			DebugPrintf( const char *fmt, ... )id_attribute((format(printf,2,3))) = 0;
+    virtual void			DebugVPrintf( const char *fmt, va_list arg ) = 0;
 
-	virtual double			GetClockTicks( void ) = 0;
-	virtual double			ClockTicksPerSecond( void ) = 0;
-	virtual cpuid_t			GetProcessorId( void ) = 0;
-	virtual const char *	GetProcessorString( void ) = 0;
-	virtual const char *	FPU_GetState( void ) = 0;
-	virtual bool			FPU_StackIsEmpty( void ) = 0;
-	virtual void			FPU_SetFTZ( bool enable ) = 0;
-	virtual void			FPU_SetDAZ( bool enable ) = 0;
+    virtual double			GetClockTicks( void ) = 0;
+    virtual double			ClockTicksPerSecond( void ) = 0;
+    virtual cpuid_t			GetProcessorId( void ) = 0;
+    virtual const char *	GetProcessorString( void ) = 0;
+    virtual const char *	FPU_GetState( void ) = 0;
+    virtual bool			FPU_StackIsEmpty( void ) = 0;
+    virtual void			FPU_SetFTZ( bool enable ) = 0;
+    virtual void			FPU_SetDAZ( bool enable ) = 0;
 
-	virtual void			FPU_EnableExceptions( int exceptions ) = 0;
+    virtual void			FPU_EnableExceptions( int exceptions ) = 0;
 
-	virtual bool			LockMemory( void *ptr, int bytes ) = 0;
-	virtual bool			UnlockMemory( void *ptr, int bytes ) = 0;
+    virtual bool			LockMemory( void *ptr, int bytes ) = 0;
+    virtual bool			UnlockMemory( void *ptr, int bytes ) = 0;
 
-	virtual void			GetCallStack( address_t *callStack, const int callStackSize ) = 0;
-	virtual const char *	GetCallStackStr( const address_t *callStack, const int callStackSize ) = 0;
-	virtual const char *	GetCallStackCurStr( int depth ) = 0;
-	virtual void			ShutdownSymbols( void ) = 0;
+    virtual void			GetCallStack( address_t *callStack, const int callStackSize ) = 0;
+    virtual const char *	GetCallStackStr( const address_t *callStack, const int callStackSize ) = 0;
+    virtual const char *	GetCallStackCurStr( int depth ) = 0;
+    virtual void			ShutdownSymbols( void ) = 0;
 
-	virtual int				DLL_Load( const char *dllName ) = 0;
-	virtual void *			DLL_GetProcAddress( int dllHandle, const char *procName ) = 0;
-	virtual void			DLL_Unload( int dllHandle ) = 0;
-	virtual void			DLL_GetFileName( const char *baseName, char *dllName, int maxLength ) = 0;
+    virtual int				DLL_Load( const char *dllName ) = 0;
+    virtual void *			DLL_GetProcAddress( int dllHandle, const char *procName ) = 0;
+    virtual void			DLL_Unload( int dllHandle ) = 0;
+    virtual void			DLL_GetFileName( const char *baseName, char *dllName, int maxLength ) = 0;
 
-	virtual sysEvent_t		GenerateMouseButtonEvent( int button, bool down ) = 0;
-	virtual sysEvent_t		GenerateMouseMoveEvent( int deltax, int deltay ) = 0;
+    virtual sysEvent_t		GenerateMouseButtonEvent( int button, bool down ) = 0;
+    virtual sysEvent_t		GenerateMouseMoveEvent( int deltax, int deltay ) = 0;
 
-	virtual void			OpenURL( const char *url, bool quit ) = 0;
-	virtual void			StartProcess( const char *exePath, bool quit ) = 0;
+    virtual void			OpenURL( const char *url, bool quit ) = 0;
+    virtual void			StartProcess( const char *exePath, bool quit ) = 0;
 };
 
 extern idSys *				sys;

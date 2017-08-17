@@ -151,19 +151,19 @@ typedef struct SDL_RWops
 /* @{ */
 
 extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromFile(const char *file,
-                                                  const char *mode);
+        const char *mode);
 
 #ifdef HAVE_STDIO_H
 extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromFP(FILE * fp,
-                                                SDL_bool autoclose);
+        SDL_bool autoclose);
 #else
 extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromFP(void * fp,
-                                                SDL_bool autoclose);
+        SDL_bool autoclose);
 #endif
 
 extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromMem(void *mem, int size);
 extern DECLSPEC SDL_RWops *SDLCALL SDL_RWFromConstMem(const void *mem,
-                                                      int size);
+        int size);
 
 /* @} *//* RWFrom functions */
 

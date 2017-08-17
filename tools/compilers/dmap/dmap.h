@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,50 +29,55 @@ If you have questions concerning this license or the applicable additional terms
 #include "../../../renderer/tr_local.h"
 
 
-typedef struct primitive_s {
-	struct primitive_s *next;
+typedef struct primitive_s
+{
+    struct primitive_s *next;
 
-	// only one of these will be non-NULL
-	struct bspbrush_s *	brush;
-	struct mapTri_s *	tris;
+    // only one of these will be non-NULL
+    struct bspbrush_s *	brush;
+    struct mapTri_s *	tris;
 } primitive_t;
 
 
-typedef struct {
-	struct optimizeGroup_s	*groups;
-	// we might want to add other fields later
+typedef struct
+{
+    struct optimizeGroup_s	*groups;
+    // we might want to add other fields later
 } uArea_t;
 
-typedef struct {
-	idMapEntity *		mapEntity;		// points into mapFile_t data
+typedef struct
+{
+    idMapEntity *		mapEntity;		// points into mapFile_t data
 
-	idVec3				origin;
-	primitive_t *		primitives;
-	struct tree_s *		tree;
+    idVec3				origin;
+    primitive_t *		primitives;
+    struct tree_s *		tree;
 
-	int					numAreas;
-	uArea_t *			areas;
+    int					numAreas;
+    uArea_t *			areas;
 } uEntity_t;
 
 
 // chains of mapTri_t are the general unit of processing
-typedef struct mapTri_s {
-	struct mapTri_s *	next;
+typedef struct mapTri_s
+{
+    struct mapTri_s *	next;
 
-	const idMaterial *	material;
-	void *				mergeGroup;		// we want to avoid merging triangles
-											// from different fixed groups, like guiSurfs and mirrors
-	int					planeNum;			// not set universally, just in some areas
+    const idMaterial *	material;
+    void *				mergeGroup;		// we want to avoid merging triangles
+    // from different fixed groups, like guiSurfs and mirrors
+    int					planeNum;			// not set universally, just in some areas
 
-	idDrawVert			v[3];
-	const struct hashVert_s *hashVert[3];
-	struct optVertex_s *optVert[3];
+    idDrawVert			v[3];
+    const struct hashVert_s *hashVert[3];
+    struct optVertex_s *optVert[3];
 } mapTri_t;
 
 
-typedef struct {
-	int					width, height;
-	idDrawVert *		verts;
+typedef struct
+{
+    int					width, height;
+    idDrawVert *		verts;
 } mesh_t;
 
 
@@ -80,133 +85,144 @@ typedef struct {
 
 #define	PLANENUM_LEAF		-1
 
-typedef struct parseMesh_s {
-	struct parseMesh_s *next;
-	mesh_t				mesh;
-	const idMaterial *	material;
+typedef struct parseMesh_s
+{
+    struct parseMesh_s *next;
+    mesh_t				mesh;
+    const idMaterial *	material;
 } parseMesh_t;
 
-typedef struct bspface_s {
-	struct bspface_s *	next;
-	int					planenum;
-	bool				portal;			// all portals will be selected before
-										// any non-portals
-	bool				checked;		// used by SelectSplitPlaneNum()
-	idWinding *			w;
+typedef struct bspface_s
+{
+    struct bspface_s *	next;
+    int					planenum;
+    bool				portal;			// all portals will be selected before
+    // any non-portals
+    bool				checked;		// used by SelectSplitPlaneNum()
+    idWinding *			w;
 } bspface_t;
 
-typedef struct {
-	idVec4		v[2];		// the offset value will always be in the 0.0 to 1.0 range
+typedef struct
+{
+    idVec4		v[2];		// the offset value will always be in the 0.0 to 1.0 range
 } textureVectors_t;
 
-typedef struct side_s {
-	int					planenum;
+typedef struct side_s
+{
+    int					planenum;
 
-	const idMaterial *	material;
-	textureVectors_t	texVec;
+    const idMaterial *	material;
+    textureVectors_t	texVec;
 
-	idWinding *			winding;		// only clipped to the other sides of the brush
-	idWinding *			visibleHull;	// also clipped to the solid parts of the world
+    idWinding *			winding;		// only clipped to the other sides of the brush
+    idWinding *			visibleHull;	// also clipped to the solid parts of the world
 } side_t;
 
 
-typedef struct bspbrush_s {
-	struct bspbrush_s *	next;
-	struct bspbrush_s *	original;	// chopped up brushes will reference the originals
+typedef struct bspbrush_s
+{
+    struct bspbrush_s *	next;
+    struct bspbrush_s *	original;	// chopped up brushes will reference the originals
 
-	int					entitynum;			// editor numbering for messages
-	int					brushnum;			// editor numbering for messages
+    int					entitynum;			// editor numbering for messages
+    int					brushnum;			// editor numbering for messages
 
-	const idMaterial *	contentShader;	// one face's shader will determine the volume attributes
+    const idMaterial *	contentShader;	// one face's shader will determine the volume attributes
 
-	int					contents;
-	bool				opaque;
-	int					outputNumber;		// set when the brush is written to the file list
+    int					contents;
+    bool				opaque;
+    int					outputNumber;		// set when the brush is written to the file list
 
-	idBounds			bounds;
-	int					numsides;
-	side_t				sides[6];			// variably sized
+    idBounds			bounds;
+    int					numsides;
+    side_t				sides[6];			// variably sized
 } uBrush_t;
 
 
-typedef struct drawSurfRef_s {
-	struct drawSurfRef_s *	nextRef;
-	int						outputNumber;
+typedef struct drawSurfRef_s
+{
+    struct drawSurfRef_s *	nextRef;
+    int						outputNumber;
 } drawSurfRef_t;
 
 
-typedef struct node_s {
-	// both leafs and nodes
-	int					planenum;	// -1 = leaf node
-	struct node_s *		parent;
-	idBounds			bounds;		// valid after portalization
+typedef struct node_s
+{
+    // both leafs and nodes
+    int					planenum;	// -1 = leaf node
+    struct node_s *		parent;
+    idBounds			bounds;		// valid after portalization
 
-	// nodes only
-	side_t *			side;		// the side that created the node
-	struct node_s *		children[2];
-	int					nodeNumber;	// set after pruning
+    // nodes only
+    side_t *			side;		// the side that created the node
+    struct node_s *		children[2];
+    int					nodeNumber;	// set after pruning
 
-	// leafs only
-	bool				opaque;		// view can never be inside
+    // leafs only
+    bool				opaque;		// view can never be inside
 
-	uBrush_t *			brushlist;	// fragments of all brushes in this leaf
-									// needed for FindSideForPortal
+    uBrush_t *			brushlist;	// fragments of all brushes in this leaf
+    // needed for FindSideForPortal
 
-	int					area;		// determined by flood filling up to areaportals
-	int					occupied;	// 1 or greater can reach entity
-	uEntity_t *			occupant;	// for leak file testing
+    int					area;		// determined by flood filling up to areaportals
+    int					occupied;	// 1 or greater can reach entity
+    uEntity_t *			occupant;	// for leak file testing
 
-	struct uPortal_s *	portals;	// also on nodes during construction
+    struct uPortal_s *	portals;	// also on nodes during construction
 } node_t;
 
 
-typedef struct uPortal_s {
-	idPlane		plane;
-	node_t		*onnode;		// NULL = outside box
-	node_t		*nodes[2];		// [0] = front side of plane
-	struct uPortal_s	*next[2];
-	idWinding	*winding;
+typedef struct uPortal_s
+{
+    idPlane		plane;
+    node_t		*onnode;		// NULL = outside box
+    node_t		*nodes[2];		// [0] = front side of plane
+    struct uPortal_s	*next[2];
+    idWinding	*winding;
 } uPortal_t;
 
 // a tree_t is created by FaceBSP()
-typedef struct tree_s {
-	node_t		*headnode;
-	node_t		outside_node;
-	idBounds	bounds;
+typedef struct tree_s
+{
+    node_t		*headnode;
+    node_t		outside_node;
+    idBounds	bounds;
 } tree_t;
 
 #define	MAX_QPATH			256			// max length of a game pathname
 
-typedef struct {
-	idRenderLightLocal	def;
-	char		name[MAX_QPATH];		// for naming the shadow volume surface and interactions
-	srfTriangles_t	*shadowTris;
+typedef struct
+{
+    idRenderLightLocal	def;
+    char		name[MAX_QPATH];		// for naming the shadow volume surface and interactions
+    srfTriangles_t	*shadowTris;
 } mapLight_t;
 
 #define	MAX_GROUP_LIGHTS	16
 
-typedef struct optimizeGroup_s {
-	struct optimizeGroup_s	*nextGroup;
+typedef struct optimizeGroup_s
+{
+    struct optimizeGroup_s	*nextGroup;
 
-	idBounds			bounds;			// set in CarveGroupsByLight
+    idBounds			bounds;			// set in CarveGroupsByLight
 
-	// all of these must match to add a triangle to the triList
-	bool				smoothed;				// curves will never merge with brushes
-	int					planeNum;
-	int					areaNum;
-	const idMaterial *	material;
-	int					numGroupLights;
-	mapLight_t *		groupLights[MAX_GROUP_LIGHTS];	// lights effecting this list
-	void *				mergeGroup;		// if this differs (guiSurfs, mirrors, etc), the
-										// groups will not be combined into model surfaces
-										// after optimization
-	textureVectors_t	texVec;
+    // all of these must match to add a triangle to the triList
+    bool				smoothed;				// curves will never merge with brushes
+    int					planeNum;
+    int					areaNum;
+    const idMaterial *	material;
+    int					numGroupLights;
+    mapLight_t *		groupLights[MAX_GROUP_LIGHTS];	// lights effecting this list
+    void *				mergeGroup;		// if this differs (guiSurfs, mirrors, etc), the
+    // groups will not be combined into model surfaces
+    // after optimization
+    textureVectors_t	texVec;
 
-	bool				surfaceEmited;
+    bool				surfaceEmited;
 
-	mapTri_t *			triList;
-	mapTri_t *			regeneratedTris;	// after each island optimization
-	idVec3				axis[2];			// orthogonal to the plane, so optimization can be 2D
+    mapTri_t *			triList;
+    mapTri_t *			regeneratedTris;	// after each island optimization
+    idVec3				axis[2];			// orthogonal to the plane, so optimization can be 2D
 } optimizeGroup_t;
 
 // all primitives from the map are added to optimzeGroups, creating new ones as needed
@@ -221,51 +237,53 @@ typedef struct optimizeGroup_s {
 
 // dmap.cpp
 
-typedef enum {
-	SO_NONE,			// 0
-	SO_MERGE_SURFACES,	// 1
-	SO_CULL_OCCLUDED,	// 2
-	SO_CLIP_OCCLUDERS,	// 3
-	SO_CLIP_SILS,		// 4
-	SO_SIL_OPTIMIZE		// 5
+typedef enum
+{
+    SO_NONE,			// 0
+    SO_MERGE_SURFACES,	// 1
+    SO_CULL_OCCLUDED,	// 2
+    SO_CLIP_OCCLUDERS,	// 3
+    SO_CLIP_SILS,		// 4
+    SO_SIL_OPTIMIZE		// 5
 } shadowOptLevel_t;
 
-typedef struct {
-	// mapFileBase will contain the qpath without any extension: "maps/test_box"
-	char		mapFileBase[1024];
+typedef struct
+{
+    // mapFileBase will contain the qpath without any extension: "maps/test_box"
+    char		mapFileBase[1024];
 
-	idMapFile	*dmapFile;
+    idMapFile	*dmapFile;
 
-	idPlaneSet	mapPlanes;
+    idPlaneSet	mapPlanes;
 
-	int			num_entities;
-	uEntity_t	*uEntities;
+    int			num_entities;
+    uEntity_t	*uEntities;
 
-	int			entityNum;
+    int			entityNum;
 
-	idList<mapLight_t*>	mapLights;
+    idList<mapLight_t*>	mapLights;
 
-	bool	verbose;
+    bool	verbose;
 
-	bool	glview;
-	bool	noOptimize;
-	bool	verboseentities;
-	bool	noCurves;
-	bool	fullCarve;
-	bool	noModelBrushes;
-	bool	noTJunc;
-	bool	nomerge;
-	bool	noFlood;
-	bool	noClipSides;		// don't cut sides by solid leafs, use the entire thing
-	bool	noLightCarve;		// extra triangle subdivision by light frustums
-	shadowOptLevel_t	shadowOptLevel;
-	bool	noShadow;			// don't create optimized shadow volumes
+    bool	glview;
+    bool	noOptimize;
+    bool	verboseentities;
+    bool	noCurves;
+    bool	fullCarve;
+    bool	noModelBrushes;
+    bool	noTJunc;
+    bool	nomerge;
+    bool	noFlood;
+    bool	noClipSides;		// don't cut sides by solid leafs, use the entire thing
+    bool	noLightCarve;		// extra triangle subdivision by light frustums
+    shadowOptLevel_t	shadowOptLevel;
+    bool	noShadow;			// don't create optimized shadow volumes
 
-	idBounds	drawBounds;
-	bool	drawflag;
+    idBounds	drawBounds;
+    bool	drawflag;
 
-	int		totalShadowTriangles;
-	int		totalShadowVerts;
+    int		totalShadowTriangles;
+    int		totalShadowVerts;
 } dmapGlobals_t;
 
 extern dmapGlobals_t dmapGlobals;
@@ -336,9 +354,10 @@ void GLS_EndScene( void );
 
 #define	MAX_INTER_AREA_PORTALS	1024
 
-typedef struct {
-	int		area0, area1;
-	side_t	*side;
+typedef struct
+{
+    int		area0, area1;
+    side_t	*side;
 } interAreaPortal_t;
 
 extern	interAreaPortal_t interAreaPortals[MAX_INTER_AREA_PORTALS];
@@ -409,37 +428,41 @@ void	FixGlobalTjunctions( uEntity_t *e );
 // will just be done by OptimizeEntity()
 
 
-typedef struct optVertex_s {
-	idDrawVert	v;
-	idVec3	pv;					// projected against planar axis, third value is 0
-	struct optEdge_s *edges;
-	struct optVertex_s	*islandLink;
-	bool	addedToIsland;
-	bool	emited;			// when regenerating triangles
+typedef struct optVertex_s
+{
+    idDrawVert	v;
+    idVec3	pv;					// projected against planar axis, third value is 0
+    struct optEdge_s *edges;
+    struct optVertex_s	*islandLink;
+    bool	addedToIsland;
+    bool	emited;			// when regenerating triangles
 } optVertex_t;
 
-typedef struct optEdge_s {
-	optVertex_t	*v1, *v2;
-	struct optEdge_s	*islandLink;
-	bool	addedToIsland;
-	bool	created;		// not one of the original edges
-	bool	combined;		// combined from two or more colinear edges
-	struct optTri_s	*frontTri, *backTri;
-	struct optEdge_s *v1link, *v2link;
+typedef struct optEdge_s
+{
+    optVertex_t	*v1, *v2;
+    struct optEdge_s	*islandLink;
+    bool	addedToIsland;
+    bool	created;		// not one of the original edges
+    bool	combined;		// combined from two or more colinear edges
+    struct optTri_s	*frontTri, *backTri;
+    struct optEdge_s *v1link, *v2link;
 } optEdge_t;
 
-typedef struct optTri_s {
-	struct optTri_s	*next;
-	idVec3		midpoint;
-	optVertex_t	*v[3];
-	bool	filled;
+typedef struct optTri_s
+{
+    struct optTri_s	*next;
+    idVec3		midpoint;
+    optVertex_t	*v[3];
+    bool	filled;
 } optTri_t;
 
-typedef struct {
-	optimizeGroup_t	*group;
-	optVertex_t	*verts;
-	optEdge_t	*edges;
-	optTri_t	*tris;
+typedef struct
+{
+    optimizeGroup_t	*group;
+    optVertex_t	*verts;
+    optEdge_t	*edges;
+    optTri_t	*tris;
 } optIsland_t;
 
 

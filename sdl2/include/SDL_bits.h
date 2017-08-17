@@ -54,7 +54,8 @@ SDL_MostSignificantBitIndex32(Uint32 x)
     /* Count Leading Zeroes builtin in GCC.
      * http://gcc.gnu.org/onlinedocs/gcc-4.3.4/gcc/Other-Builtins.html
      */
-    if (x == 0) {
+    if (x == 0)
+    {
         return -1;
     }
     return 31 - __builtin_clz(x);
@@ -69,7 +70,8 @@ SDL_MostSignificantBitIndex32(Uint32 x)
     int msbIndex = 0;
     int i;
 
-    if (x == 0) {
+    if (x == 0)
+    {
         return -1;
     }
 

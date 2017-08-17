@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -40,93 +40,94 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 
-class idSecurityCamera : public idEntity {
+class idSecurityCamera : public idEntity
+{
 public:
-	CLASS_PROTOTYPE( idSecurityCamera );
+    CLASS_PROTOTYPE( idSecurityCamera );
 
-	void					Spawn( void );
+    void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+    void					Save( idSaveGame *savefile ) const;
+    void					Restore( idRestoreGame *savefile );
 
-	virtual void			Think( void );
+    virtual void			Think( void );
 
-	virtual renderView_t *	GetRenderView();
-	virtual void			Killed( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
-	virtual bool			Pain( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
-	virtual void			Present( void );
+    virtual renderView_t *	GetRenderView();
+    virtual void			Killed( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
+    virtual bool			Pain( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location );
+    virtual void			Present( void );
 
 
-	void					reset( void );
+    void					reset( void );
 
 
 private:
 
 
-	enum { SCANNING, LOSINGINTEREST, ALERT, ACTIVATED };
+    enum { SCANNING, LOSINGINTEREST, ALERT, ACTIVATED };
 
-	float					angle;
-	float					baseAngle;
-	float					sweepAngle;
-	int						modelAxis;
-	bool					flipAxis;
-	float					scanDist;
-	float					scanFov;
-							
-	float					sweepStart;
-	float					sweepEnd;
-	bool					negativeSweep;
-	bool					sweeping;
-	int						alertMode;
-	float					stopSweeping;
-	float					scanFovCos;
+    float					angle;
+    float					baseAngle;
+    float					sweepAngle;
+    int						modelAxis;
+    bool					flipAxis;
+    float					scanDist;
+    float					scanFov;
 
-	idVec3					viewOffset;
+    float					sweepStart;
+    float					sweepEnd;
+    bool					negativeSweep;
+    bool					sweeping;
+    int						alertMode;
+    float					stopSweeping;
+    float					scanFovCos;
 
-	
-							
-	int						pvsArea;
-	idPhysics_RigidBody		physicsObj;
-	idTraceModel			trm;
-
-	void					StartSweep( void );
-	bool					CanSeePlayer( void );
-	void					SetAlertMode( int status );
-	void					DrawFov( void );
-	void					DrawBounds( void );
-	const idVec3			GetAxis( void ) const;
-	float					SweepSpeed( void ) const;
-
-	void					Event_ReverseSweep( void );
-	void					Event_ContinueSweep( void );
-	void					Event_Pause( void );
-	void					Event_Alert( void );
-	void					Event_AddLight( void );
-	void					Event_KillGhost( void );
+    idVec3					viewOffset;
 
 
-	//BC
-	idVec3					GetLensPos( void );
+
+    int						pvsArea;
+    idPhysics_RigidBody		physicsObj;
+    idTraceModel			trm;
+
+    void					StartSweep( void );
+    bool					CanSeePlayer( void );
+    void					SetAlertMode( int status );
+    void					DrawFov( void );
+    void					DrawBounds( void );
+    const idVec3			GetAxis( void ) const;
+    float					SweepSpeed( void ) const;
+
+    void					Event_ReverseSweep( void );
+    void					Event_ContinueSweep( void );
+    void					Event_Pause( void );
+    void					Event_Alert( void );
+    void					Event_AddLight( void );
+    void					Event_KillGhost( void );
 
 
-	void					Event_camOff( void );
-	void					Event_camOn( void );
-	bool					camActive;
-
-	float					softAlarmTimer;
-	bool					softAlarmActivated;
-
-	float					targetDist; //distance of target to camera.
-	float					closeTolerance; //how close player has to be in order to immediately trigger cam sighting.
+    //BC
+    idVec3					GetLensPos( void );
 
 
-	idEntityPtr<idEntity>	lastSpottedEnt;
-	idBeam*					beam;
-	idBeam*					beamTarget;
-	idEntity*				ghostImage;
+    void					Event_camOff( void );
+    void					Event_camOn( void );
+    bool					camActive;
 
-	idBeam*					boundBeam[ VIEWCONE_SPOKES ];	
-	idBeam*					boundBeamTarget[ VIEWCONE_SPOKES ];
+    float					softAlarmTimer;
+    bool					softAlarmActivated;
+
+    float					targetDist; //distance of target to camera.
+    float					closeTolerance; //how close player has to be in order to immediately trigger cam sighting.
+
+
+    idEntityPtr<idEntity>	lastSpottedEnt;
+    idBeam*					beam;
+    idBeam*					beamTarget;
+    idEntity*				ghostImage;
+
+    idBeam*					boundBeam[ VIEWCONE_SPOKES ];
+    idBeam*					boundBeamTarget[ VIEWCONE_SPOKES ];
 };
 
 #endif /* !__GAME_SECURITYCAMERA_H__ */

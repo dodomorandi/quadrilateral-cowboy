@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,45 +33,45 @@ If you have questions concerning this license or the applicable additional terms
 #include "GEMoveModifier.h"
 
 rvGEMoveModifier::rvGEMoveModifier ( const char* name, idWindow* window, float x, float y ) :
-	rvGEModifier ( name, window  )
+    rvGEModifier ( name, window  )
 {
-	mOldRect = mWrapper->GetClientRect ( );
+    mOldRect = mWrapper->GetClientRect ( );
 
-	mNewRect[0] = mOldRect[0] + x;
-	mNewRect[1] = mOldRect[1] + y;
-	mNewRect[2] = mOldRect[2];
-	mNewRect[3] = mOldRect[3];
+    mNewRect[0] = mOldRect[0] + x;
+    mNewRect[1] = mOldRect[1] + y;
+    mNewRect[2] = mOldRect[2];
+    mNewRect[3] = mOldRect[3];
 }
 
 bool rvGEMoveModifier::Merge ( rvGEModifier* mergebase )
 {
-	rvGEMoveModifier* merge = (rvGEMoveModifier*) mergebase;
-	
-	mNewRect = merge->mNewRect;
-	
-	return true;
-} 
+    rvGEMoveModifier* merge = (rvGEMoveModifier*) mergebase;
+
+    mNewRect = merge->mNewRect;
+
+    return true;
+}
 
 bool rvGEMoveModifier::Apply ( void )
-{	
-	mWrapper->SetRect ( mNewRect );
+{
+    mWrapper->SetRect ( mNewRect );
 
-	return true;
+    return true;
 }
 
 bool rvGEMoveModifier::Undo ( void )
 {
-	mWrapper->SetRect ( mOldRect );
-	
-	return true;
+    mWrapper->SetRect ( mOldRect );
+
+    return true;
 }
 
 bool rvGEMoveModifier::IsValid ( void )
 {
-	if ( !mWindow->GetParent ( ) )
-	{
-		return false;
-	}
-	
-	return true;
+    if ( !mWindow->GetParent ( ) )
+    {
+        return false;
+    }
+
+    return true;
 }

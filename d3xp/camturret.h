@@ -2,25 +2,25 @@
 class idCamturret : public idAnimatedEntity
 {
 public:
-	CLASS_PROTOTYPE( idCamturret );
+    CLASS_PROTOTYPE( idCamturret );
 
-	void					Spawn( void );
+    void					Spawn( void );
 
-	virtual void			Think( void );
+    virtual void			Think( void );
 
-	void					GotoAlert( void );
+    void					GotoAlert( void );
 
 private:
 
-	enum					{ OFF, OPENING, SEARCHING, SUSPICIOUS, ALERTED };
-	int						state;
+    enum					{ OFF, OPENING, SEARCHING, SUSPICIOUS, ALERTED };
+    int						state;
 
-	int						nextStateTime;
-	int						nextSearchTime;
+    int						nextStateTime;
+    int						nextSearchTime;
 
-	bool					HasLOS();
-	void					PointCamera(const char* jointName, idVec3 aimPos);
+    bool					HasLOS();
+    void					PointCamera(const char* jointName, idVec3 aimPos);
 
-	void					Event_camturretactivate( int value );
-	int						Event_PlayAnim( const char* animname, bool loop = false);
+    void					Event_camturretactivate( int value );
+    int						Event_PlayAnim( const char* animname, bool loop = false);
 };

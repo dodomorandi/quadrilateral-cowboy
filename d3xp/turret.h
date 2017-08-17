@@ -2,50 +2,50 @@
 class idTurret : public idAnimatedEntity
 {
 public:
-	CLASS_PROTOTYPE( idTurret );
+    CLASS_PROTOTYPE( idTurret );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+    void					Save( idSaveGame *savefile ) const;
+    void					Restore( idRestoreGame *savefile );
 
-	void					Spawn( void );
+    void					Spawn( void );
 
-	virtual void			Think( void );
-	virtual void			Present( void );
+    virtual void			Think( void );
+    virtual void			Present( void );
 
 
 private:
 
-	void					UpdateStates( void );
-	enum					{ OFF, ON, CLOSING };
-	int						state;
+    void					UpdateStates( void );
+    enum					{ OFF, ON, CLOSING };
+    int						state;
 
 
-	enum					{ IDLE, WARMUP, VOLLEYING };
-	int						attackState;
-	int						nextStateTime;
-	int						volleyCount;
-	int						nextIdleSound;
-
-	
-	void					Event_activate( int value );
-	void					Event_isactive();
+    enum					{ IDLE, WARMUP, VOLLEYING };
+    int						attackState;
+    int						nextStateTime;
+    int						volleyCount;
+    int						nextIdleSound;
 
 
-	void					MuzzleflashOff();
-
-	idMat3					bodyAxis;
-	idMat3					turretAxis;
-
-	idBeam*					beamStart;	
-	idBeam*					beamEnd;
-
-	idEntity*				laserdot;
+    void					Event_activate( int value );
+    void					Event_isactive();
 
 
-	idEntityPtr<idEntity>	targetEnt;		// entity being dragged
+    void					MuzzleflashOff();
+
+    idMat3					bodyAxis;
+    idMat3					turretAxis;
+
+    idBeam*					beamStart;
+    idBeam*					beamEnd;
+
+    idEntity*				laserdot;
 
 
-	bool					CheckTargetLOS(idEntity *ent, idVec3 offset);
-	bool					CheckTargetValidity(idEntity *ent);
-	void					GotoWarmupState( void );
+    idEntityPtr<idEntity>	targetEnt;		// entity being dragged
+
+
+    bool					CheckTargetLOS(idEntity *ent, idVec3 offset);
+    bool					CheckTargetValidity(idEntity *ent);
+    void					GotoWarmupState( void );
 };

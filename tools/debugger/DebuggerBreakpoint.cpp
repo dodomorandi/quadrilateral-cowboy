@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 GPL Source Code
-Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1999-2011 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).  
+This file is part of the Doom 3 GPL Source Code (?Doom 3 Source Code?).
 
 Doom 3 Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,25 +36,25 @@ int rvDebuggerBreakpoint::mNextID = 1;
 
 rvDebuggerBreakpoint::rvDebuggerBreakpoint ( const char* filename, int linenumber, int id )
 {
-	mFilename = filename;
-	mLineNumber = linenumber;
-	mEnabled = true;
-	
-	if ( id == -1 )
-	{	
-		mID = mNextID++;
-	}	
-	else 
-	{
-		mID = id;
-	}
+    mFilename = filename;
+    mLineNumber = linenumber;
+    mEnabled = true;
+
+    if ( id == -1 )
+    {
+        mID = mNextID++;
+    }
+    else
+    {
+        mID = id;
+    }
 }
 
 rvDebuggerBreakpoint::rvDebuggerBreakpoint ( rvDebuggerBreakpoint& bp )
 {
-	mFilename = bp.mFilename;
-	mEnabled = bp.mEnabled;
-	mLineNumber = bp.mLineNumber;
+    mFilename = bp.mFilename;
+    mEnabled = bp.mEnabled;
+    mLineNumber = bp.mLineNumber;
 }
 
 rvDebuggerBreakpoint::~rvDebuggerBreakpoint ( void )

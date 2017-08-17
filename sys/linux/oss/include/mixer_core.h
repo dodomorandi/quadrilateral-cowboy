@@ -22,32 +22,32 @@ typedef int (*mixer_ext_init_fn) (int dev);
 
 typedef struct
 {
-  oss_mixext ext;
-  mixer_ext_fn handler;
-  oss_mixer_enuminfo *enum_info;
+    oss_mixext ext;
+    mixer_ext_fn handler;
+    oss_mixer_enuminfo *enum_info;
 }
 oss_mixext_desc;
 
 struct mixer_operations
 {
-  char id[16];
-  char name[64];
-  int (*ioctl) (int dev, int audiodev, unsigned int cmd, ioctl_arg arg);
+    char id[16];
+    char name[64];
+    int (*ioctl) (int dev, int audiodev, unsigned int cmd, ioctl_arg arg);
 
-  void *devc;
-  void *hw_devc;
-  int modify_counter;
+    void *devc;
+    void *hw_devc;
+    int modify_counter;
 
-  /* Mixer extension interface */
-  int nr_ext;
-  int max_ext;
-  int nr_extra_ext;
-  int timestamp;
-  oss_mixext_desc *extensions;
-  mixer_ext_init_fn ext_init_fn;
-  int ignore_mask;		/* Controls ignored by mixer ext API */
-  int card_number;
-  int enabled;
+    /* Mixer extension interface */
+    int nr_ext;
+    int max_ext;
+    int nr_extra_ext;
+    int timestamp;
+    oss_mixext_desc *extensions;
+    mixer_ext_init_fn ext_init_fn;
+    int ignore_mask;		/* Controls ignored by mixer ext API */
+    int card_number;
+    int enabled;
 };
 
 typedef struct mixer_operations mixdev_t, *mixdev_p;

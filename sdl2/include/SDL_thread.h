@@ -56,7 +56,8 @@ typedef unsigned int SDL_TLSID;
  *
  *  \note On many systems you require special privileges to set high priority.
  */
-typedef enum {
+typedef enum
+{
     SDL_THREAD_PRIORITY_LOW,
     SDL_THREAD_PRIORITY_NORMAL,
     SDL_THREAD_PRIORITY_HIGH
@@ -93,11 +94,11 @@ typedef int (SDLCALL * SDL_ThreadFunction) (void *data);
 #include <process.h>            /* This has _beginthread() and _endthread() defined! */
 
 typedef uintptr_t(__cdecl * pfnSDL_CurrentBeginThread) (void *, unsigned,
-                                                        unsigned (__stdcall *
-                                                                  func) (void
-                                                                         *),
-                                                        void *arg, unsigned,
-                                                        unsigned *threadID);
+        unsigned (__stdcall *
+                  func) (void
+                         *),
+        void *arg, unsigned,
+        unsigned *threadID);
 typedef void (__cdecl * pfnSDL_CurrentEndThread) (unsigned code);
 
 /**
@@ -225,7 +226,7 @@ extern DECLSPEC void SDLCALL SDL_DetachThread(SDL_Thread * thread);
  *  \code
  *  static SDL_SpinLock tls_lock;
  *  static SDL_TLSID thread_local_storage;
- * 
+ *
  *  void SetMyThreadData(void *value)
  *  {
  *      if (!thread_local_storage) {
@@ -237,7 +238,7 @@ extern DECLSPEC void SDLCALL SDL_DetachThread(SDL_Thread * thread);
  *      }
  *      SDL_TLSSet(thread_local_storage, value, 0);
  *  }
- *  
+ *
  *  void *GetMyThreadData(void)
  *  {
  *      return SDL_TLSGet(thread_local_storage);

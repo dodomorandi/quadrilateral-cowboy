@@ -130,7 +130,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetRelativeMouseState(int *x, int *y);
  *  \note This function generates a mouse motion event
  */
 extern DECLSPEC void SDLCALL SDL_WarpMouseInWindow(SDL_Window * window,
-                                                   int x, int y);
+        int x, int y);
 
 /**
  *  \brief Moves the mouse to the given position in global screen space.
@@ -217,9 +217,9 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GetRelativeMouseMode(void);
  *  \sa SDL_FreeCursor()
  */
 extern DECLSPEC SDL_Cursor *SDLCALL SDL_CreateCursor(const Uint8 * data,
-                                                     const Uint8 * mask,
-                                                     int w, int h, int hot_x,
-                                                     int hot_y);
+        const Uint8 * mask,
+        int w, int h, int hot_x,
+        int hot_y);
 
 /**
  *  \brief Create a color cursor.
@@ -227,8 +227,8 @@ extern DECLSPEC SDL_Cursor *SDLCALL SDL_CreateCursor(const Uint8 * data,
  *  \sa SDL_FreeCursor()
  */
 extern DECLSPEC SDL_Cursor *SDLCALL SDL_CreateColorCursor(SDL_Surface *surface,
-                                                          int hot_x,
-                                                          int hot_y);
+        int hot_x,
+        int hot_y);
 
 /**
  *  \brief Create a system cursor.

@@ -2,19 +2,19 @@
 class idCommentaryNode : public idStaticEntity
 {
 public:
-	CLASS_PROTOTYPE( idCommentaryNode );
+    CLASS_PROTOTYPE( idCommentaryNode );
 
-	void					Spawn( void );
+    void					Spawn( void );
 
-	void					Save( idSaveGame *savefile ) const;
-	void					Restore( idRestoreGame *savefile );
+    void					Save( idSaveGame *savefile ) const;
+    void					Restore( idRestoreGame *savefile );
 
-	virtual void			Think( void );	
+    virtual void			Think( void );
 
-	void					OnFrob( idEntity* activator );
+    void					OnFrob( idEntity* activator );
 
 private:
 
-	bool					frobbed;
-	idVec3					orgOrigin;
+    bool					frobbed;
+    idVec3					orgOrigin;
 };

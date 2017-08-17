@@ -4,22 +4,22 @@
 class idDoorFolding : public idEntity
 {
 public:
-							CLASS_PROTOTYPE( idDoorFolding );
+    CLASS_PROTOTYPE( idDoorFolding );
 
-	void					Think( void );
-	void					Spawn( void );
+    void					Think( void );
+    void					Spawn( void );
 
 private:
 
-	enum					{ OFF, ON };
-	int						state;
+    enum					{ OFF, ON };
+    int						state;
 
-	void					Event_activate( int value );
+    void					Event_activate( int value );
 
-	idMover					* movers[BARCOUNT];
+    idMover					* movers[BARCOUNT];
 
 
-	idBeam*					beam[BARCOUNT*8];
+    idBeam*					beam[BARCOUNT*8];
 
 };
 
