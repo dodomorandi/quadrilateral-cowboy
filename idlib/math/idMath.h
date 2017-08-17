@@ -37,6 +37,9 @@ If you have questions concerning this license or the applicable additional terms
 // for FLT_MIN
 #include <float.h>
 #endif
+
+#include <cstdint>
+
 /*
 ===============================================================================
 
@@ -243,13 +246,11 @@ private:
 
 ID_INLINE float idMath::RSqrt( float x ) {
 
-	long i;
-	float y, r;
-
-	y = x * 0.5f;
-	i = *reinterpret_cast<long *>( &x );
+    static_assert(sizeof(float) == sizeof(std::int32_t), "Architecture not supported (sizeof(float) != 4)");
+	float y = x * 0.5f;
+	int32_t i = *reinterpret_cast<std::int32_t *>( &x );
 	i = 0x5f3759df - ( i >> 1 );
-	r = *reinterpret_cast<float *>( &i );
+	float r = *reinterpret_cast<float *>( &i );
 	r = r * ( 1.5f - r * r * y );
 	return r;
 }
@@ -653,15 +654,14 @@ ID_INLINE float idMath::Exp( float f ) {
 }
 
 ID_INLINE float idMath::Exp16( float f ) {
-	int i, s, e, m, exponent;
 	float x, x2, y, p, q;
 
 	x = f * 1.44269504088896340f;		// multiply with ( 1 / log( 2 ) )
 #if 1
-	i = *reinterpret_cast<int *>(&x);
-	s = ( i >> IEEE_FLT_SIGN_BIT );
-	e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
-	m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
+    std::int32_t i = *reinterpret_cast<std::int32_t *>(&x);
+    std::int32_t s = ( i >> IEEE_FLT_SIGN_BIT );
+	std::int32_t e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
+	std::int32_t m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
 	i = ( ( m >> ( IEEE_FLT_MANTISSA_BITS - e ) ) & ~( e >> 31 ) ) ^ s;
 #else
 	i = (int) x;
@@ -669,7 +669,7 @@ ID_INLINE float idMath::Exp16( float f ) {
 		i--;
 	}
 #endif
-	exponent = ( i + IEEE_FLT_EXPONENT_BIAS ) << IEEE_FLT_MANTISSA_BITS;
+	std::int32_t exponent = ( i + IEEE_FLT_EXPONENT_BIAS ) << IEEE_FLT_MANTISSA_BITS;
 	y = *reinterpret_cast<float *>(&exponent);
 	x -= (float) i;
 	if ( x >= 0.5f ) {
@@ -692,11 +692,10 @@ ID_INLINE float idMath::Log( float f ) {
 }
 
 ID_INLINE float idMath::Log16( float f ) {
-	int i, exponent;
 	float y, y2;
 
-	i = *reinterpret_cast<int *>(&f);
-	exponent = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
+    std::int32_t i = *reinterpret_cast<std::int32_t *>(&f);
+    std::int32_t exponent = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 	i -= ( exponent + 1 ) << IEEE_FLT_MANTISSA_BITS;	// get value in the range [.5, 1>
 	y = *reinterpret_cast<float *>(&i);
 	y *= 1.4142135623730950488f;						// multiply with sqrt( 2 )
@@ -716,7 +715,7 @@ ID_INLINE int idMath::IPow( int x, int y ) {
 }
 
 ID_INLINE int idMath::ILog2( float f ) {
-	return ( ( (*reinterpret_cast<int *>(&f)) >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
+	return ( ( (*reinterpret_cast<std::int32_t *>(&f)) >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
 }
 
 ID_INLINE int idMath::ILog2( int i ) {
@@ -732,7 +731,7 @@ ID_INLINE int idMath::BitsForInteger( int i ) {
 }
 
 ID_INLINE int idMath::MaskForFloatSign( float f ) {
-	return ( (*reinterpret_cast<int *>(&f)) >> 31 );
+	return ( (*reinterpret_cast<std::int32_t *>(&f)) >> 31 );
 }
 
 ID_INLINE int idMath::MaskForIntegerSign( int i ) {
@@ -780,7 +779,7 @@ ID_INLINE int idMath::Abs( int x ) {
 }
 
 ID_INLINE float idMath::Fabs( float f ) {
-	int tmp = *reinterpret_cast<int *>( &f );
+    std::int32_t tmp = *reinterpret_cast<std::int32_t *>( &f );
 	tmp &= 0x7FFFFFFF;
 	return *reinterpret_cast<float *>( &tmp );
 }
@@ -803,21 +802,20 @@ ID_INLINE int idMath::Ftoi( float f ) {
 
 ID_INLINE int idMath::FtoiFast( float f ) {
 #ifdef _WIN32
-	int i;
+    std::int32_t i;
 	__asm fld		f
 	__asm fistp		i		// use default rouding mode (round nearest)
 	return i;
 #elif 0						// round chop (C/C++ standard)
-	int i, s, e, m, shift;
-	i = *reinterpret_cast<int *>(&f);
-	s = i >> IEEE_FLT_SIGN_BIT;
-	e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
-	m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
-	shift = e - IEEE_FLT_MANTISSA_BITS;
+    std::int32_t i = *reinterpret_cast<std::int32_t *>(&f);
+    std::int32_t s = i >> IEEE_FLT_SIGN_BIT;
+    std::int32_t e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
+    std::int32_t m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
+    std::int32_t shift = e - IEEE_FLT_MANTISSA_BITS;
 	return ( ( ( ( m >> -shift ) | ( m << shift ) ) & ~( e >> 31 ) ) ^ s ) - s;
 //#elif defined( __i386__ )
 #elif 0
-	int i = 0;
+    std::int32_t i = 0;
 	__asm__ __volatile__ (
 						  "fld %1\n" \
 						  "fistp %0\n" \
@@ -841,12 +839,11 @@ ID_INLINE unsigned long idMath::FtolFast( float f ) {
 	__asm fistp		i		// use default rouding mode (round nearest)
 	return i;
 #elif 0						// round chop (C/C++ standard)
-	int i, s, e, m, shift;
-	i = *reinterpret_cast<int *>(&f);
-	s = i >> IEEE_FLT_SIGN_BIT;
-	e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
-	m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
-	shift = e - IEEE_FLT_MANTISSA_BITS;
+    std::int32_t i = *reinterpret_cast<std::int32_t *>(&f);
+    std::int32_t s = i >> IEEE_FLT_SIGN_BIT;
+	std::int32_t e = ( ( i >> IEEE_FLT_MANTISSA_BITS ) & ( ( 1 << IEEE_FLT_EXPONENT_BITS ) - 1 ) ) - IEEE_FLT_EXPONENT_BIAS;
+	std::int32_t m = ( i & ( ( 1 << IEEE_FLT_MANTISSA_BITS ) - 1 ) ) | ( 1 << IEEE_FLT_MANTISSA_BITS );
+	std::int32_t shift = e - IEEE_FLT_MANTISSA_BITS;
 	return ( ( ( ( m >> -shift ) | ( m << shift ) ) & ~( e >> 31 ) ) ^ s ) - s;
 //#elif defined( __i386__ )
 #elif 0
@@ -953,7 +950,7 @@ ID_INLINE int idMath::FloatHash( const float *array, const int numFloats ) {
 	int i, hash = 0;
 	const int *ptr;
 
-	ptr = reinterpret_cast<const int *>( array );
+	ptr = reinterpret_cast<const std::int32_t *>( array );
 	for ( i = 0; i < numFloats; i++ ) {
 		hash ^= ptr[i];
 	}

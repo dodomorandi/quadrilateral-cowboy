@@ -656,7 +656,7 @@ DLL Loading
 Sys_DLL_Load
 =====================
 */
-int Sys_DLL_Load( const char *dllName ) {
+ptrdiff_t Sys_DLL_Load( const char *dllName ) {
 	HINSTANCE	libHandle;
 	libHandle = LoadLibrary( dllName );
 	if ( libHandle ) {
@@ -669,7 +669,7 @@ int Sys_DLL_Load( const char *dllName ) {
 			return 0;
 		}
 	}
-	return (int)libHandle;
+	return reinterpret_cast<ptrdiff_t>(libHandle);
 }
 
 /*

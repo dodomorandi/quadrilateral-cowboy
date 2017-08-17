@@ -37,6 +37,8 @@ If you have questions concerning this license or the applicable additional terms
 //	#define CRASH_ON_STATIC_ALLOCATION
 #endif
 
+#include <memory>
+
 //===============================================================
 //
 //	idHeap
@@ -318,27 +320,38 @@ idHeap::Allocate16
 ================
 */
 void *idHeap::Allocate16( const dword bytes ) {
-	byte *ptr, *alignedPtr;
+    /*
+     * TODO: can we use std::aligned_alloc?
+     */
+	unsigned char* ptr;
+    unsigned char* alignedPtr;
+    std::size_t bufferSize = static_cast<std::size_t>(bytes) + 16 + sizeof(void*);
 
-	ptr = (byte *) malloc( bytes + 16 + 4 );
+	ptr = reinterpret_cast<unsigned char*>(malloc( bufferSize ));
 	if ( !ptr ) {
 		if ( defragBlock ) {
 			idLib::common->Printf( "Freeing defragBlock on alloc of %i.\n", bytes );
 			free( defragBlock );
 			defragBlock = NULL;
-			ptr = (byte *) malloc( bytes + 16 + 4 );			
+			ptr = reinterpret_cast<unsigned char*>(malloc( bufferSize ));
 			AllocDefragBlock();
 		}
 		if ( !ptr ) {
 			common->FatalError( "malloc failure for %i", bytes );
 		}
 	}
-	alignedPtr = (byte *) ( ( (size_t) ptr ) + 15 & ~15 );
-	if ( alignedPtr - ptr < 4 ) {
+    alignedPtr = ptr;
+    if(not std::align(16, bytes, reinterpret_cast<void*&>(alignedPtr), bufferSize))
+    {
+        free( ptr );
+        common->FatalError( "cannot correctly align pointer" );
+    }
+
+	if ( alignedPtr - ptr < sizeof(void*) ) {
 		alignedPtr += 16;
 	}
-	*((int *)(alignedPtr - 4)) = (size_t) ptr;
-	return (void *) alignedPtr;
+    *reinterpret_cast<void**>(alignedPtr - sizeof(void*)) = ptr;
+	return alignedPtr;
 }
 
 /*
@@ -347,7 +360,7 @@ idHeap::Free16
 ================
 */
 void idHeap::Free16( void *p ) {
-	free( (void *) *((int *) (( (byte *) p ) - 4)) );
+    free(*reinterpret_cast<void**>(reinterpret_cast<unsigned char*>(p) - sizeof(void*)));
 }
 
 /*

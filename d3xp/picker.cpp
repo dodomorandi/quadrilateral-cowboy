@@ -199,7 +199,7 @@ void idPicker::StartDrag( idEntity *grabEnt, int id ) {
 			
 		}
 
-		grabEnt->PostEventMS( &EV_Touch, 250, thePlayer, NULL );
+		grabEnt->PostEventMS( &EV_Touch, 250, thePlayer, nullptr );
 
 	}
 	

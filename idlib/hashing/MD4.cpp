@@ -244,16 +244,13 @@ void MD4_Final( MD4_CTX *context, unsigned char digest[16] ) {
 MD4_BlockChecksum
 ===============
 */
-unsigned long MD4_BlockChecksum( const void *data, int length ) {
-	unsigned long	digest[4];
-	unsigned long	val;
+std::uint32_t MD4_BlockChecksum( const void *data, int length ) {
+    std::uint32_t	digest[4];
 	MD4_CTX			ctx;
 
 	MD4_Init( &ctx );
 	MD4_Update( &ctx, (unsigned char *)data, length );
 	MD4_Final( &ctx, (unsigned char *)digest );
 
-	val = digest[0] ^ digest[1] ^ digest[2] ^ digest[3];
-
-	return val;
+	return digest[0] ^ digest[1] ^ digest[2] ^ digest[3];
 }

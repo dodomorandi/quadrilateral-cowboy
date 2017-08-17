@@ -1,14 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 project(Quadrilateral_Cowboy)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -m32")
-
-set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
-list(INSERT CMAKE_SYSTEM_LIBRARY_PATH 0 /usr/local/lib32 /usr/lib32 /lib32)
-list(REMOVE_ITEM CMAKE_SYSTEM_LIBRARY_PATH /usr/local/lib /usr/lib /lib)
 
 find_package(Threads REQUIRED)
 find_package(OpenAL REQUIRED)
@@ -17,7 +9,9 @@ find_package(OggVorbis REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(Flite REQUIRED)
 
-add_definitions(-DID_GL_HARDLINK=1 -DUSE_SDL=1 -D_D3XP=1)
+set(CMAKE_CXX_STANDARD 11)
+set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
+add_definitions(-DID_GL_HARDLINK=1 -DUSE_SDL=1 -D_D3XP=1 -DUSE_LIBC_MALLOC=1)
 
 add_library(
         doomlib

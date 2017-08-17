@@ -1,6 +1,8 @@
 #ifndef __MD4_H__
 #define __MD4_H__
 
+#include <cstdint>
+
 /*
 ===============================================================================
 
@@ -10,6 +12,6 @@
 ===============================================================================
 */
 
-unsigned long MD4_BlockChecksum( const void *data, int length );
+std::uint32_t MD4_BlockChecksum( const void *data, int length );
 
 #endif /* !__MD4_H__ */
