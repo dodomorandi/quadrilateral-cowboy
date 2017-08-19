@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "../Game_local.h"
+#include <exception>
 
 #define	MAX_SECTOR_DEPTH				12
 #define MAX_SECTORS						((1<<(MAX_SECTOR_DEPTH+1))-1)
@@ -1856,6 +1857,9 @@ bool idClip::GetModelContactFeature( const contactInfo_t &contact, const idClipM
             collisionModelManager->GetModelPolygon( handle, contact.modelFeature, winding );
             break;
         }
+        default:
+            common->Error("invalid contact");
+            std::terminate();
         }
     }
 

@@ -627,13 +627,13 @@ void *idHeap::SmallAllocate( dword bytes )
     byte *smallBlock = (byte *)(smallFirstFree[bytes / ALIGN]);
     if ( smallBlock )
     {
-        dword *link = (dword *)(smallBlock + SMALL_HEADER_SIZE);
+        void* link = smallBlock + SMALL_HEADER_SIZE;
         smallBlock[1] = SMALL_ALLOC;					// allocation identifier
-        smallFirstFree[bytes / ALIGN] = (void *)(*link);
-        return (void *)(link);
+        smallFirstFree[bytes / ALIGN] = link;
+        return link;
     }
 
-    dword bytesLeft = (long)(pageSize) - smallCurPageOffset;
+    dword bytesLeft = pageSize - smallCurPageOffset;
     // if we need to allocate a new page
     if ( bytes >= bytesLeft )
     {
@@ -650,7 +650,7 @@ void *idHeap::SmallAllocate( dword bytes )
     }
 
     smallBlock			= ((byte *)smallCurPage->data) + smallCurPageOffset;
-    smallBlock[0]		= (byte)(bytes / ALIGN);		// write # of bytes/ALIGN
+    smallBlock[0]		= bytes / ALIGN;        		// write # of bytes/ALIGN
     smallBlock[1]		= SMALL_ALLOC;					// allocation identifier
     smallCurPageOffset  += bytes + SMALL_HEADER_SIZE;	// increase the offset on the current page
     return ( smallBlock + SMALL_HEADER_SIZE );			// skip the first two bytes
@@ -669,7 +669,6 @@ void idHeap::SmallFree( void *ptr )
     ((byte *)(ptr))[-1] = INVALID_ALLOC;
 
     byte *d = ( (byte *)ptr ) - SMALL_HEADER_SIZE;
-    dword *dt = (dword *)ptr;
     // index into the table with free small memory blocks
     dword ix = *d;
 
@@ -679,7 +678,7 @@ void idHeap::SmallFree( void *ptr )
         idLib::common->FatalError( "SmallFree: invalid memory block" );
     }
 
-    *dt = (size_t)smallFirstFree[ix];	// write next index
+    *reinterpret_cast<void**>(ptr) = smallFirstFree[ix];	// write next index
     smallFirstFree[ix] = (void *)d;		// link
 }
 
@@ -1054,8 +1053,7 @@ void *idHeap::LargeAllocate( dword bytes )
     }
 
     byte *	d	= (byte*)(p->data) + ALIGN_SIZE( LARGE_HEADER_SIZE );
-    dword *	dw	= (dword*)(d - ALIGN_SIZE( LARGE_HEADER_SIZE ));
-    dw[0]		= (size_t)p;				// write pointer back to page table
+    *reinterpret_cast<void**>(d - ALIGN_SIZE(LARGE_HEADER_SIZE)) = p;  // write pointer back to page table
     d[-1]		= LARGE_ALLOC;			// allocation identifier
 
     // link to 'large used page list'
@@ -1080,12 +1078,11 @@ idHeap::LargeFree
 */
 void idHeap::LargeFree( void *ptr)
 {
-    idHeap::page_s*	pg;
-
     ((byte *)(ptr))[-1] = INVALID_ALLOC;
 
     // get page pointer
-    pg = (idHeap::page_s *)(*((dword *)(((byte *)ptr) - ALIGN_SIZE( LARGE_HEADER_SIZE ))));
+    
+    idHeap::page_s*	pg = *reinterpret_cast<idHeap::page_s**>(reinterpret_cast<byte*>(ptr) - ALIGN_SIZE(LARGE_HEADER_SIZE));
 
     // unlink from doubly linked list
     if ( pg->prev )

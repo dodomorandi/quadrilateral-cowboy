@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "tr_local.h"
+#include <exception>
 
 
 typedef struct
@@ -558,6 +559,9 @@ bool	R_GenerateSurfaceSubview( drawSurf_t *drawSurf )
             case DI_XRAY_RENDER:
                 R_XrayRender( drawSurf, const_cast<textureStage_t *>(&stage->texture), scissor );
                 break;
+            default:
+                common->Error("invalid subview");
+                std::terminate();
             }
         }
         return true;

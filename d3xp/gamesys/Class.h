@@ -59,7 +59,7 @@ class idEventArg
 {
 public:
     int			type;
-    int			value;
+    ptrdiff_t	value;
 
     idEventArg()
     {

@@ -1282,17 +1282,17 @@ idSlowChannel::Reset
 */
 void idSlowChannel::Reset()
 {
-    memset( this, 0, sizeof( *this ) );
+    active = false;
+    playbackState = 0;
+    triggerOffset = 0;
 
-    this->chan = chan;
-
-    curPosition.Set( 0 );
     newPosition.Set( 0 );
-
-    curSampleOffset = -10000;
     newSampleOffset = -10000;
 
-    triggerOffset = 0;
+    curPosition.Set( 0 );
+    curSampleOffset = -10000;
+
+    lowpass = SoundFX_LowpassFast{};
 }
 
 /*

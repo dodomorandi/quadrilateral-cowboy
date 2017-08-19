@@ -8,6 +8,7 @@ find_package(OpenGL REQUIRED)
 find_package(OggVorbis REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(Flite REQUIRED)
+find_package(JPEG REQUIRED)
 
 set(CMAKE_CXX_STANDARD 11)
 set_property(GLOBAL PROPERTY CXX_STANDARD_REQUIRED ON)
@@ -107,50 +108,6 @@ add_library(
         renderer/tr_trisurf.cpp
         renderer/tr_turboshadow.cpp
         renderer/VertexCache.cpp
-        renderer/jpeg-6/jcapimin.c
-        renderer/jpeg-6/jccoefct.c
-        renderer/jpeg-6/jccolor.c
-        renderer/jpeg-6/jcdctmgr.c
-        renderer/jpeg-6/jchuff.c
-        renderer/jpeg-6/jcinit.c
-        renderer/jpeg-6/jcmainct.c
-        renderer/jpeg-6/jcmarker.c
-        renderer/jpeg-6/jcmaster.c
-        renderer/jpeg-6/jcomapi.c
-        renderer/jpeg-6/jcparam.c
-        renderer/jpeg-6/jcphuff.c
-        renderer/jpeg-6/jcprepct.c
-        renderer/jpeg-6/jcsample.c
-        renderer/jpeg-6/jdapimin.c
-        renderer/jpeg-6/jdapistd.c
-        renderer/jpeg-6/jdatadst.c
-        renderer/jpeg-6/jdatasrc.c
-        renderer/jpeg-6/jdcoefct.c
-        renderer/jpeg-6/jdcolor.c
-        renderer/jpeg-6/jddctmgr.c
-        renderer/jpeg-6/jdhuff.c
-        renderer/jpeg-6/jdinput.c
-        renderer/jpeg-6/jdmainct.c
-        renderer/jpeg-6/jdmarker.c
-        renderer/jpeg-6/jdmaster.c
-        renderer/jpeg-6/jdmerge.c
-        renderer/jpeg-6/jdphuff.c
-        renderer/jpeg-6/jdpostct.c
-        renderer/jpeg-6/jdsample.c
-        renderer/jpeg-6/jdtrans.c
-        renderer/jpeg-6/jerror.c
-        renderer/jpeg-6/jfdctflt.c
-        renderer/jpeg-6/jfdctfst.c
-        renderer/jpeg-6/jfdctint.c
-        renderer/jpeg-6/jidctflt.c
-        renderer/jpeg-6/jidctfst.c
-        renderer/jpeg-6/jidctint.c
-        renderer/jpeg-6/jidctred.c
-        renderer/jpeg-6/jmemmgr.c
-        renderer/jpeg-6/jmemnobs.c
-        renderer/jpeg-6/jquant1.c
-        renderer/jpeg-6/jquant2.c
-        renderer/jpeg-6/jutils.c
         # sound/snd_cache.cpp
         # sound/snd_decoder.cpp
         # sound/snd_efxfile.cpp
@@ -256,8 +213,8 @@ add_library(
         sound_oal/snd_world.cpp
         sound_oal/sound.h
 )
-target_include_directories(doomlib PRIVATE "${PROJECT_SOURCE_DIR}/sys/linux/oss/include" ${SDL2_INCLUDE_DIR} ${FLITE_INCLUDE_DIR})
-target_link_libraries(doomlib idlib ${SDL2_LIBRARY} ${FLITE_LIBRARY} ${FLITE_CMU_US_RMS_LIBRARY} ${FLITE_USENGLISH_LIBRARY} ${FLITE_CMULEX_LIBRARY})
+target_include_directories(doomlib PRIVATE "${PROJECT_SOURCE_DIR}/sys/linux/oss/include" ${SDL2_INCLUDE_DIR} ${FLITE_INCLUDE_DIR} ${JPEG_INCLUDE_DIR})
+target_link_libraries(doomlib idlib ${SDL2_LIBRARY} ${JPEG_LIBRARY} ${FLITE_LIBRARY} ${FLITE_CMU_US_RMS_LIBRARY} ${FLITE_USENGLISH_LIBRARY} ${FLITE_CMULEX_LIBRARY})
 
 add_library(
         typeinfo

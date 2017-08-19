@@ -64,7 +64,7 @@ struct gameVersion_s
 {
     gameVersion_s( void )
     {
-        sprintf( string, "%s%s %s %s", ENGINE_VERSION,  BUILD_DEBUG, BUILD_STRING, __DATE__, __TIME__ );
+        sprintf( string, "%s%s %s %s %s", ENGINE_VERSION,  BUILD_DEBUG, BUILD_STRING, __DATE__, __TIME__ );
     }
     char	string[256];
 } gameVersion;

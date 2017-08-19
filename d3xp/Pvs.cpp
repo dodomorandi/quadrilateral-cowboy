@@ -988,13 +988,11 @@ void idPVS::Shutdown( void )
         delete areaPVS;
         areaPVS = NULL;
     }
-    if ( currentPVS )
+    for ( int i = 0; i < MAX_CURRENT_PVS; i++ )
     {
-        for ( int i = 0; i < MAX_CURRENT_PVS; i++ )
-        {
-            delete currentPVS[i].pvs;
-            currentPVS[i].pvs = NULL;
-        }
+        assert(currentPVS[i].pvs);
+        delete currentPVS[i].pvs;
+        currentPVS[i].pvs = NULL;
     }
 }
 

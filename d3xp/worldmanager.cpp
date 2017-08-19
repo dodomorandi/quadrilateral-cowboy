@@ -560,7 +560,7 @@ void idWorldManager::UpdatePlay( int idx )
             }
             else
             {
-                gameLocal.Warning("WorldManager couldn't find frob ent: %s\n", gameLocal.FindEntity( records[idx].events[currentIndex].frobcommand.c_str()));
+                gameLocal.Warning("WorldManager couldn't find frob ent: %s\n", gameLocal.FindEntity( records[idx].events[currentIndex].frobcommand.c_str())->name.c_str());
             }
 
             records[idx].events[currentIndex].done = true;

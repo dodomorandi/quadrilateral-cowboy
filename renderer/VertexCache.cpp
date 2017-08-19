@@ -134,7 +134,7 @@ void *idVertexCache::Position( vertCache_t *buffer )
         {
             if ( buffer->tag == TAG_TEMP )
             {
-                common->Printf( "GL_ARRAY_BUFFER_ARB = %i + %i (%i bytes)\n", buffer->vbo, buffer->offset, buffer->size );
+                common->Printf( "GL_ARRAY_BUFFER_ARB = %i + %zu (%i bytes)\n", buffer->vbo, buffer->offset, buffer->size );
             }
             else
             {

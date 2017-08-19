@@ -614,7 +614,7 @@ void	idMegaTexture::GenerateMegaMipMaps( megaTextureHeader_t *header, idFile *ou
                         if ( tx > width || ty > height )
                         {
                             // off edge, zero fill
-                            memset( newBlock, 0, sizeof( newBlock ) );
+                            memset( newBlock, 0, tileSize );
                         }
                         else
                         {

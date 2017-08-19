@@ -30,7 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "Game_local.h"
-
+#include <exception>
 
 /*
 ===============================================================================
@@ -878,6 +878,9 @@ bool idAF::LoadConstraint( const idDeclAF_Constraint *fc )
         c->SetLimit( fc->minLength, fc->maxLength );
         break;
     }
+    default:
+        common->Error("invalid type");
+        std::terminate();
     }
     return true;
 }

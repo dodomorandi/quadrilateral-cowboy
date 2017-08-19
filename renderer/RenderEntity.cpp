@@ -31,28 +31,27 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
-idRenderEntityLocal::idRenderEntityLocal()
+idRenderEntityLocal::idRenderEntityLocal() :
+    world(nullptr),
+    index(0),
+    lastModifiedFrameNum(0),
+    archived(false),
+    dynamicModel(nullptr),
+    dynamicModelFrameCount(0),
+    cachedDynamicModel(0),
+    referenceBounds(bounds_zero),
+    viewCount(0),
+    viewEntity(nullptr),
+    visibleCount(0),
+    decals(nullptr),
+    overlay(nullptr),
+    entityRefs(nullptr),
+    firstInteraction(nullptr),
+    lastInteraction(nullptr),
+    needsPortalSky(false)
 {
     memset( &parms, 0, sizeof( parms ) );
     memset( modelMatrix, 0, sizeof( modelMatrix ) );
-
-    world					= NULL;
-    index					= 0;
-    lastModifiedFrameNum	= 0;
-    archived				= false;
-    dynamicModel			= NULL;
-    dynamicModelFrameCount	= 0;
-    cachedDynamicModel		= NULL;
-    referenceBounds			= bounds_zero;
-    viewCount				= 0;
-    viewEntity				= NULL;
-    visibleCount			= 0;
-    decals					= NULL;
-    overlay					= NULL;
-    entityRefs				= NULL;
-    firstInteraction		= NULL;
-    lastInteraction			= NULL;
-    needsPortalSky			= false;
 }
 
 void idRenderEntityLocal::FreeRenderEntity()

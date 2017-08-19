@@ -131,6 +131,30 @@ typedef struct
     char				name[64];
 } fontInfo_t;
 
+struct SerializedGlyphInfo
+{
+    int height;
+    int top;
+    int bottom;
+    int pitch;
+    int xSkip;
+    int imageWidth;
+    int imageHeight;
+    float s;
+    float t;
+    float s2;
+    float t2;
+    std::int32_t junk;
+    char shaderName[32];
+};
+
+struct SerializedFontInfo
+{
+    SerializedGlyphInfo glyphs[GLYPHS_PER_FONT];
+    float glyphScale;
+    char name[64];
+};
+
 typedef struct
 {
     fontInfo_t			fontInfoSmall;

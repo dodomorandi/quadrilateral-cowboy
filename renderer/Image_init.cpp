@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "tr_local.h"
+#include <exception>
 
 const char *imageFilter[] =
 {
@@ -1027,7 +1028,7 @@ void R_QuadraticImage( idImage *image )
 
 typedef struct
 {
-    char *name;
+    const char *name;
     int	minimize, maximize;
 } filterName_t;
 
@@ -1110,6 +1111,11 @@ void idImageManager::ChangeTextureFilter( void )
         case TT_CUBIC:
             texEnum = GL_TEXTURE_CUBE_MAP_EXT;
             break;
+        case TT_DISABLED:
+            continue;
+        default:
+            common->Error("invalid texture type");
+            std::terminate();
         }
 
         // make sure we don't start a background load

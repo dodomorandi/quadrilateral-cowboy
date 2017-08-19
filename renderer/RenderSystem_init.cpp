@@ -318,7 +318,7 @@ PFNGLDEPTHBOUNDSEXTPROC                 qglDepthBoundsEXT;
 R_CheckExtension
 =================
 */
-bool R_CheckExtension( char *name )
+bool R_CheckExtension( const char *name )
 {
     if ( !strstr( glConfig.extensions_string, name ) )
     {
@@ -563,7 +563,7 @@ static void R_CheckPortableExtensions( void )
     if ( !glConfig.multitextureAvailable || !glConfig.textureEnvCombineAvailable || !glConfig.cubeMapAvailable
             || !glConfig.envDot3Available )
     {
-        common->Error( common->GetLanguageDict()->GetString( "#str_06780" ) );
+        common->Error( "%s", common->GetLanguageDict()->GetString( "#str_06780" ) );
     }
 
     // GL_EXT_depth_bounds_test

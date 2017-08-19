@@ -44,7 +44,7 @@ typedef struct vertCache_s
     void			*virtMem;			// only one of vbo / virtMem will be set
     bool			indexBuffer;		// holds indexes instead of vertexes
 
-    int				offset;
+    std::size_t		offset;
     int				size;				// may be larger than the amount asked for, due
     // to round up and minimum fragment sizes
     int				tag;				// a tag of 0 is a free block

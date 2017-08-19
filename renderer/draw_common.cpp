@@ -29,6 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "tr_local.h"
+#include <exception>
 
 /*
 =====================
@@ -1901,6 +1902,9 @@ void	RB_STD_DrawView( void )
     case BE_R200:
         RB_R200_DrawInteractions();
         break;
+    case BE_BAD:
+        common->Error( "invalid backend rendered");
+        std::terminate();
     }
 
     // disable stencil shadow test

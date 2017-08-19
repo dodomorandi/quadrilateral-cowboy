@@ -67,7 +67,7 @@ public:
     virtual void			BufferCommandText( cmdExecution_t exec, const char *text );
     virtual void			ExecuteCommandBuffer( void );
 
-    virtual void			ArgCompletion_FolderExtension( const idCmdArgs &args, void(*callback)( const char *s ), const char *folder, bool stripFolder, ... );
+    virtual void			ArgCompletion_FolderExtension( const idCmdArgs &args, void(*callback)( const char *s ), const char *folder, int stripFolder, ... );
     virtual void			ArgCompletion_DeclName( const idCmdArgs &args, void(*callback)( const char *s ), int type );
 
     virtual void			BufferCommandArgs( cmdExecution_t exec, const idCmdArgs &args );
@@ -827,7 +827,7 @@ void idCmdSystemLocal::ExecuteCommandBuffer( void )
 idCmdSystemLocal::ArgCompletion_FolderExtension
 ============
 */
-void idCmdSystemLocal::ArgCompletion_FolderExtension( const idCmdArgs &args, void(*callback)( const char *s ), const char *folder, bool stripFolder, ... )
+void idCmdSystemLocal::ArgCompletion_FolderExtension( const idCmdArgs &args, void(*callback)( const char *s ), const char *folder, int stripFolder, ... )
 {
     int i;
     idStr string;
@@ -848,7 +848,7 @@ void idCmdSystemLocal::ArgCompletion_FolderExtension( const idCmdArgs &args, voi
 
         parm = args.Argv( 1 );
         parm.ExtractFilePath( path );
-        if ( stripFolder || path.Length() == 0 )
+        if ( static_cast<bool>(stripFolder) || path.Length() == 0 )
         {
             path = folder + path;
         }
@@ -859,7 +859,7 @@ void idCmdSystemLocal::ArgCompletion_FolderExtension( const idCmdArgs &args, voi
         for ( i = 0; i < names->GetNumFiles(); i++ )
         {
             idStr name = names->GetFile( i );
-            if ( stripFolder )
+            if ( static_cast<bool>(stripFolder) )
             {
                 name.Strip( folder );
             }
@@ -880,7 +880,7 @@ void idCmdSystemLocal::ArgCompletion_FolderExtension( const idCmdArgs &args, voi
             for ( i = 0; i < names->GetNumFiles(); i++ )
             {
                 idStr name = names->GetFile( i );
-                if ( stripFolder )
+                if ( static_cast<bool>(stripFolder) )
                 {
                     name.Strip( folder );
                 }

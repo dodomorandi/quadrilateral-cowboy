@@ -7861,14 +7861,13 @@ idMatX::Eigen_SortIncreasing
 */
 void idMatX::Eigen_SortIncreasing( idVecX &eigenValues )
 {
-    int i, j, k;
     float min;
 
-    for ( i = 0, j; i <= numRows - 2; i++ )
+    for ( int i = 0; i <= numRows - 2; i++ )
     {
-        j = i;
+        int j = i;
         min = eigenValues[j];
-        for ( k = i + 1; k < numRows; k++ )
+        for ( int k = i + 1; k < numRows; k++ )
         {
             if ( eigenValues[k] < min )
             {
@@ -7891,14 +7890,13 @@ idMatX::Eigen_SortDecreasing
 */
 void idMatX::Eigen_SortDecreasing( idVecX &eigenValues )
 {
-    int i, j, k;
     float max;
 
-    for ( i = 0, j; i <= numRows - 2; i++ )
+    for ( int i = 0; i <= numRows - 2; i++ )
     {
-        j = i;
+        int j = i;
         max = eigenValues[j];
-        for ( k = i + 1; k < numRows; k++ )
+        for ( int k = i + 1; k < numRows; k++ )
         {
             if ( eigenValues[k] > max )
             {

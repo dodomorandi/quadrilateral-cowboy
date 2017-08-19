@@ -5270,7 +5270,7 @@ idPlayer::GiveVideo
 void idPlayer::GiveVideo( const char *videoName, idDict *item )
 {
 
-    if ( videoName == NULL || *videoName == NULL )
+    if ( *videoName == '\0' )
     {
         return;
     }
@@ -5313,7 +5313,7 @@ idPlayer::GiveEmail
 void idPlayer::GiveEmail( const char *emailName )
 {
 
-    if ( emailName == NULL || *emailName == NULL )
+    if ( *emailName == '\0' )
     {
         return;
     }
@@ -5344,7 +5344,7 @@ void idPlayer::GivePDA( const char *pdaName, idDict *item )
         inventory.pdaSecurity.AddUnique( item->GetString( "inv_name" ) );
     }
 
-    if ( pdaName == NULL || *pdaName == NULL )
+    if ( *pdaName == '\0' )
     {
         pdaName = "personal";
     }
@@ -8339,8 +8339,8 @@ void idPlayer::UpdateViewAngles( void )
     //BC demo time out
     if (viewAngles.pitch != lastViewAngles.pitch || viewAngles.yaw != lastViewAngles.yaw || viewAngles.roll != lastViewAngles.roll
             || usercmd.forwardmove != 0 || usercmd.rightmove != 0 || usercmd.upmove != 0
-            || usercmd.buttons & BUTTON_PICKER != 0 || usercmd.buttons & BUTTON_ATTACK != 0
-            || usercmd.buttons & BUTTON_ROTATE != 0 || usercmd.buttons & BUTTON_ZOOM != 0)
+            || ( usercmd.buttons & BUTTON_PICKER ) != 0 || ( usercmd.buttons & BUTTON_ATTACK ) != 0
+            || ( usercmd.buttons & BUTTON_ROTATE ) != 0 || ( usercmd.buttons & BUTTON_ZOOM ) != 0 )
     {
         //this->DebugMessage(va("diff %d\n", gameLocal.time));
         lastMoveTime = gameLocal.time;
@@ -8904,7 +8904,7 @@ void idPlayer::UpdatePDAInfo( bool updatePDASel )
         const char *security = pda->GetSecurity();
         if ( j == currentPDA || (currentPDA == 0 && security && *security ) )
         {
-            if ( *security == NULL )
+            if ( *security == '\0' )
             {
                 security = common->GetLanguageDict()->GetString( "#str_00066" );
             }
@@ -9707,7 +9707,7 @@ void idPlayer::PerformImpulse( int impulse )
             return;
         }
 
-        * ( int * ) 0 = 0x12345678;
+        * ( volatile int * ) 0 = 0x12345678;
         break;
     }
 
@@ -10519,7 +10519,7 @@ void idPlayer::UpdateHud( void )
                 count = 3;
             }
 #endif
-            for ( i = 0; i < count, i < c; i++ )   //_D3XP
+            for ( i = 0; i < count and i < c; i++ )   //_D3XP
             {
                 hud->SetStateString( va( "itemtext%i", inventory.nextItemNum ), inventory.pickupItemNames[0].name );
                 hud->SetStateString( va( "itemicon%i", inventory.nextItemNum ), inventory.pickupItemNames[0].icon );

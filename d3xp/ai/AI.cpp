@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "../Game_local.h"
+#include <exception>
 
 static const char *moveCommandString[ NUM_MOVE_COMMANDS ] =
 {
@@ -1299,6 +1300,9 @@ void idAI::Think( void )
                 PlayChatter();
                 CheckBlink();
                 break;
+            default:
+                common->Error("invalid move type");
+                std::terminate();
             }
         }
 
@@ -2577,6 +2581,10 @@ bool idAI::GetMovePos( idVec3 &seekPos )
         seekPos = org;
         return false;
         break;
+
+    default:
+        common->Error("invalid move command");
+        std::terminate();
     }
 
     if ( move.moveCommand == MOVE_TO_ENTITY )

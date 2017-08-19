@@ -373,7 +373,7 @@ void idCommonLocal::VPrintf( const char *fmt, va_list args )
     {
         msg[sizeof(msg)-2] = '\n';
         msg[sizeof(msg)-1] = '\0'; // avoid output garbling
-        Sys_Printf( "idCommon::VPrintf: truncated to %d characters\n", strlen(msg)-1 );
+        Sys_Printf( "idCommon::VPrintf: truncated to %zu characters\n", strlen(msg)-1 );
     }
 
     if ( rd_buffer )
@@ -1527,7 +1527,7 @@ static void Com_Crash_f( const idCmdArgs &args )
     fileSystem->CloseFile( crashfile );
     */
 
-    * ( int * ) 0 = 0x12345678;
+    * ( volatile int * ) 0 = 0x12345678;
 }
 
 /*
@@ -2843,7 +2843,7 @@ void idCommonLocal::Frame( void )
         // the FPU stack better be empty at this point or some bad code or compiler bug left values on the stack
         if ( !Sys_FPU_StackIsEmpty() )
         {
-            Printf( Sys_FPU_GetState() );
+            Printf( "%s", Sys_FPU_GetState() );
             FatalError( "idCommon::Frame: the FPU stack is not empty at the end of the frame\n" );
         }
     }

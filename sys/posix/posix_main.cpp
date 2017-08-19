@@ -437,7 +437,7 @@ ptrdiff_t Sys_DLL_Load( const char *path )
 Sys_DLL_GetProcAddress
 =================
 */
-void* Sys_DLL_GetProcAddress( int handle, const char *sym )
+void* Sys_DLL_GetProcAddress( ptrdiff_t handle, const char *sym )
 {
     const char *error;
     void *ret = dlsym( (void *)handle, sym );
@@ -453,7 +453,7 @@ void* Sys_DLL_GetProcAddress( int handle, const char *sym )
 Sys_DLL_Unload
 =================
 */
-void Sys_DLL_Unload( int handle )
+void Sys_DLL_Unload( ptrdiff_t handle )
 {
     dlclose( (void *)handle );
 }

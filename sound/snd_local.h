@@ -771,43 +771,43 @@ public:
     }
 
     // all non-hardware initialization
-    virtual void			Init( void );
+    virtual void			Init( void ) override;
 
     // shutdown routine
-    virtual	void			Shutdown( void );
+    virtual	void			Shutdown( void ) override;
     virtual void			ClearBuffer( void );
 
     // sound is attached to the window, and must be recreated when the window is changed
-    virtual bool			ShutdownHW( void );
-    virtual bool			InitHW( void );
+    virtual bool			ShutdownHW( void ) override;
+    virtual bool			InitHW( void ) override;
 
     // async loop, called at 60Hz
-    virtual int				AsyncUpdate( int time );
+    virtual int				AsyncUpdate( int time ) override;
     // async loop, when the sound driver uses a write strategy
-    virtual int				AsyncUpdateWrite( int time );
+    virtual int				AsyncUpdateWrite( int time ) override;
     // direct mixing called from the sound driver thread for OSes that support it
-    virtual int				AsyncMix( int soundTime, float *mixBuffer );
+    virtual int				AsyncMix( int soundTime, float *mixBuffer ) override;
 
-    virtual void			SetMute( bool mute );
+    virtual void			SetMute( bool mute ) override;
 
-    virtual cinData_t		ImageForTime( const int milliseconds, const bool waveform );
+    virtual cinData_t		ImageForTime( const int milliseconds, const bool waveform ) override;
 
-    int						GetSoundDecoderInfo( int index, soundDecoderInfo_t &decoderInfo );
+    virtual int				GetSoundDecoderInfo( int index, soundDecoderInfo_t &decoderInfo ) override;
 
     // if rw == NULL, no portal occlusion or rendered debugging is available
-    virtual idSoundWorld	*AllocSoundWorld( idRenderWorld *rw );
+    virtual idSoundWorld	*AllocSoundWorld( idRenderWorld *rw ) override;
 
     // specifying NULL will cause silence to be played
-    virtual void			SetPlayingSoundWorld( idSoundWorld *soundWorld );
+    virtual void			SetPlayingSoundWorld( idSoundWorld *soundWorld ) override;
 
     // some tools, like the sound dialog, may be used in both the game and the editor
     // This can return NULL, so check!
-    virtual idSoundWorld	*GetPlayingSoundWorld( void );
+    virtual idSoundWorld	*GetPlayingSoundWorld( void ) override;
 
-    virtual	void			BeginLevelLoad( void );
-    virtual	void			EndLevelLoad( const char *mapString );
+    virtual	void			BeginLevelLoad( void ) override;
+    virtual	void			EndLevelLoad( const char *mapString ) override;
 
-    virtual void			PrintMemInfo( MemInfo_t *mi );
+    virtual void			PrintMemInfo( MemInfo_t *mi ) override;
 
     virtual int				IsEAXAvailable( void );
 

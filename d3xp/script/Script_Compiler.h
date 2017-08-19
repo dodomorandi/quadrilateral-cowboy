@@ -32,8 +32,8 @@ const char * const RESULT_STRING = "<RESULT>";
 
 typedef struct opcode_s
 {
-    char		*name;
-    char		*opname;
+    const char	*name;
+    const char	*opname;
     int			priority;
     bool		rightAssociative;
     idVarDef	*type_a;
@@ -200,7 +200,7 @@ class idCompiler
 {
 private:
     static bool		punctuationValid[ 256 ];
-    static char		*punctuation[];
+    static const char	*punctuation[];
 
     idParser		parser;
     idParser		*parserPtr;

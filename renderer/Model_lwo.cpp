@@ -30,6 +30,7 @@ If you have questions concerning this license or the applicable additional terms
 #pragma hdrstop
 
 #include "Model_lwo.h"
+#include <exception>
 
 /*
 ======================================================================
@@ -1313,7 +1314,7 @@ int sgetI1( unsigned char **bp )
     i = **bp;
     if ( i > 127 ) i -= 256;
     flen += 1;
-    *bp++;
+    (*bp)++;
     return i;
 }
 
@@ -1351,7 +1352,7 @@ unsigned char sgetU1( unsigned char **bp )
     if ( flen == FLEN_ERROR ) return 0;
     c = **bp;
     flen += 1;
-    *bp++;
+    (*bp)++;
     return c;
 }
 
@@ -1784,7 +1785,7 @@ static int add_clip( char *s, lwClip **clist, int *nclips )
     clip->saturation.val = 1.0f;
     clip->gamma.val = 1.0f;
 
-    if ( p = strstr( s, "(sequence)" ))
+    if ( (p = strstr( s, "(sequence)" )) )
     {
         p[ -1 ] = 0;
         clip->type = ID_ISEQ;
@@ -1797,7 +1798,7 @@ static int add_clip( char *s, lwClip **clist, int *nclips )
         clip->source.still.name = s;
     }
 
-    *nclips++;
+    (*nclips)++;
     clip->index = *nclips;
 
     lwListAdd( (void**)clist, clip );
@@ -2272,7 +2273,9 @@ int lwGetPolygons5( idFile *fp, int cksize, lwPolygonList *plist, int ptoffset )
             bp += 2;
         }
         j -= 1;
-        pp->surf = ( lwSurface * ) j;
+        // Don't have the minimum idea of what should be done here. Terminating...
+        std::terminate();
+        //pp->surf = ( lwSurface * ) j;
 
         pp++;
         pv += nv;
@@ -3012,7 +3015,9 @@ int lwGetPolygonTags( idFile *fp, int cksize, lwTagList *tlist, lwPolygonList *p
         switch ( type )
         {
         case ID_SURF:
-            plist->pol[ i ].surf = ( lwSurface * ) j;
+            // Don't have the minimum idea of what should be done here. Terminating...
+            std::terminate();
+            //plist->pol[ i ].surf = ( lwSurface * ) j;
             break;
         case ID_PART:
             plist->pol[ i ].part = j;

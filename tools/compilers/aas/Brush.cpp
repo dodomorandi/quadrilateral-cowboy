@@ -44,7 +44,7 @@ If you have questions concerning this license or the applicable additional terms
 DisplayRealTimeString
 ============
 */
-void DisplayRealTimeString( char *string, ... )
+void DisplayRealTimeString( const char *string, ... )
 {
     va_list argPtr;
     char buf[MAX_STRING_CHARS];
@@ -57,7 +57,7 @@ void DisplayRealTimeString( char *string, ... )
         va_start( argPtr, string );
         vsprintf( buf, string, argPtr );
         va_end( argPtr );
-        common->Printf( buf );
+        common->Printf( "%s", buf );
         lastUpdateTime = time;
     }
 }

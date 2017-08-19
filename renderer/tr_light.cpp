@@ -31,6 +31,8 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "tr_local.h"
 
+#include <exception>
+
 static const float CHECK_BOUNDS_EPSILON = 1.0f;
 
 
@@ -1439,12 +1441,17 @@ void R_AddDrawSurf( const srfTriangles_t *tri, const viewEntity_t *space, const 
     // skybox surfaces need a dynamic texgen
     switch( shader->Texgen() )
     {
+    case TG_EXPLICIT:
+        break;
     case TG_SKYBOX_CUBE:
         R_SkyboxTexGen( drawSurf, tr.viewDef->renderView.vieworg );
         break;
     case TG_WOBBLESKY_CUBE:
         R_WobbleskyTexGen( drawSurf, tr.viewDef->renderView.vieworg );
         break;
+    default:
+        common->Error("invalid shader texgen");
+        std::terminate();
     }
 
     // check for gui surfaces

@@ -44,6 +44,9 @@ If you have questions concerning this license or the applicable additional terms
 #include <ifaddrs.h>
 #endif
 
+#include <limits>
+#include <type_traits>
+
 #include "../../idlib/precompiled.h"
 
 idPort clientPort, serverPort;
@@ -128,7 +131,8 @@ static bool ExtractPort( const char *src, char *buf, int bufsize, int *port )
     *p = '\0';
     *port = strtol( p+1, NULL, 10 );
     if ( ( *port == 0 && errno == EINVAL ) ||
-            ( ( *port == LONG_MIN || *port == LONG_MAX ) && errno == ERANGE ) )
+            ( ( *port == std::numeric_limits<std::decay<decltype(*port)>::type>::min() ||
+                *port == std::numeric_limits<std::decay<decltype(*port)>::type>::max() ) && errno == ERANGE ) )
     {
         return false;
     }

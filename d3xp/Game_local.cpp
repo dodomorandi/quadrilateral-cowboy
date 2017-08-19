@@ -76,7 +76,7 @@ const char *idGameLocal::sufaceTypeNames[ MAX_SURFACE_TYPES ] =
 
 #ifdef _D3XP
 // List of all defs used by the player that will stay on the fast timeline
-static char* fastEntityList[] =
+static const char* fastEntityList[] =
 {
     "player_doommarine",
     "weapon_chainsaw",
@@ -1393,7 +1393,7 @@ bool idGameLocal::NextMap( void )
 
     if ( !g_mapCycle.GetString()[0] )
     {
-        Printf( common->GetLanguageDict()->GetString( "#str_04294" ) );
+        Printf( "%s", common->GetLanguageDict()->GetString( "#str_04294" ) );
         return false;
     }
     if ( fileSystem->ReadFile( g_mapCycle.GetString(), NULL, NULL ) < 0 )
@@ -3062,7 +3062,7 @@ void idGameLocal::CalcFov( float base_fov, float &fov_x, float &fov_y ) const
 
     if ( !sys->FPU_StackIsEmpty() )
     {
-        Printf( sys->FPU_GetState() );
+        Printf( "%s", sys->FPU_GetState() );
         Error( "idGameLocal::CalcFov: FPU stack not empty" );
     }
 
@@ -3075,7 +3075,7 @@ void idGameLocal::CalcFov( float base_fov, float &fov_x, float &fov_y ) const
     assert( fov_y > 0 );
     if ( fov_y <= 0 )
     {
-        Printf( sys->FPU_GetState() );
+        Printf( "%s", sys->FPU_GetState() );
         Error( "idGameLocal::CalcFov: bad result" );
     }
 
@@ -3127,7 +3127,7 @@ void idGameLocal::CalcFov( float base_fov, float &fov_x, float &fov_y ) const
     assert( ( fov_x > 0 ) && ( fov_y > 0 ) );
     if ( ( fov_y <= 0 ) || ( fov_x <= 0 ) )
     {
-        Printf( sys->FPU_GetState() );
+        Printf( "%s", sys->FPU_GetState() );
         Error( "idGameLocal::CalcFov: bad result" );
     }
 }

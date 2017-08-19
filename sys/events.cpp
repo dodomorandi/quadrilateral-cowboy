@@ -643,7 +643,7 @@ sysEvent_t Sys_GetEvent()
             return res;
 
         case SDL_TEXTINPUT:
-            if (ev.text.text && *ev.text.text)
+            if (*ev.text.text)
             {
 
                 res.evType = SE_CHAR;

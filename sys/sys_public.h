@@ -395,8 +395,8 @@ void			Sys_ShutdownSymbols( void );
 
 // DLL loading, the path should be a fully qualified OS path to the DLL file to be loaded
 ptrdiff_t		Sys_DLL_Load( const char *dllName );
-void *			Sys_DLL_GetProcAddress( int dllHandle, const char *procName );
-void			Sys_DLL_Unload( int dllHandle );
+void *			Sys_DLL_GetProcAddress( ptrdiff_t dllHandle, const char *procName );
+void			Sys_DLL_Unload( ptrdiff_t dllHandle );
 
 // event generation
 void			Sys_GenerateEvents( void );

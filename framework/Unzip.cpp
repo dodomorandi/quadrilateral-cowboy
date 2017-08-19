@@ -1478,10 +1478,12 @@ static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
 
     /* we check the magic */
     if (err==UNZ_OK)
+    {
         if (unzlocal_getLong(s->file,&uMagic) != UNZ_OK)
             err=UNZ_ERRNO;
         else if (uMagic!=0x02014b50)
             err=UNZ_BADZIPFILE;
+    }
 
     if (unzlocal_getShort(s->file,&file_info.version) != UNZ_OK)
         err=UNZ_ERRNO;
@@ -1558,10 +1560,13 @@ static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
             uSizeRead = extraFieldBufferSize;
 
         if (lSeek!=0)
+        {
             if (fseek(s->file,lSeek,SEEK_CUR)==0)
                 lSeek=0;
             else
                 err=UNZ_ERRNO;
+        }
+
         if ((file_info.size_file_extra>0) && (extraFieldBufferSize>0))
             if (fread(extraField,(uInt)uSizeRead,1,s->file)!=1)
                 err=UNZ_ERRNO;
@@ -1583,10 +1588,13 @@ static int unzlocal_GetCurrentFileInfoInternal (unzFile file,
             uSizeRead = commentBufferSize;
 
         if (lSeek!=0)
+        {
             if (fseek(s->file,lSeek,SEEK_CUR)==0)
                 lSeek=0;
             else
                 err=UNZ_ERRNO;
+        }
+
         if ((file_info.size_file_comment>0) && (commentBufferSize>0))
             if (fread(szComment,(uInt)uSizeRead,1,s->file)!=1)
                 err=UNZ_ERRNO;
@@ -1782,10 +1790,12 @@ static int unzlocal_CheckCurrentFileCoherencyHeader (unz_s* s, uInt* piSizeVar,
 
 
     if (err==UNZ_OK)
+    {
         if (unzlocal_getLong(s->file,&uMagic) != UNZ_OK)
             err=UNZ_ERRNO;
         else if (uMagic!=0x04034b50)
             err=UNZ_BADZIPFILE;
+    }
 
     if (unzlocal_getShort(s->file,&uData) != UNZ_OK)
         err=UNZ_ERRNO;
@@ -1964,7 +1974,7 @@ extern int unzReadCurrentFile  (unzFile file, void *buf, unsigned len)
         return UNZ_PARAMERROR;
 
 
-    if ((pfile_in_zip_read_info->read_buffer == NULL))
+    if (pfile_in_zip_read_info->read_buffer == NULL)
         return UNZ_END_OF_LIST_OF_FILE;
     if (len==0)
         return 0;
@@ -3237,16 +3247,16 @@ static int huft_build(uInt *b, uInt n, uInt s, const uInt *d, const uInt *e, inf
     uInt f;                       /* i repeats in table every f entries */
     int g;                        /* maximum code length */
     int h;                        /* table level */
-    register uInt i;              /* counter, current code */
-    register uInt j;              /* counter */
-    register int k;               /* number of bits in current code */
+    uInt i;              /* counter, current code */
+    uInt j;              /* counter */
+    int k;               /* number of bits in current code */
     int l;                        /* bits per table (returned in m) */
     uInt mask;                    /* (1 << w) - 1, to avoid cc -O bug on HP */
-    register uInt *p;            /* pointer into c[], b[], or v[] */
+    uInt *p;            /* pointer into c[], b[], or v[] */
     inflate_huft *q;              /* points to current table */
     struct inflate_huft_s r;      /* table entry for structure assignment */
     inflate_huft *u[BMAX];        /* table stack */
-    register int w;               /* bits before this table == (l * h) */
+    int w;               /* bits before this table == (l * h) */
     uInt x[BMAX+1];               /* bit offsets, then code stack */
     uInt *xp;                    /* pointer into x */
     int y;                        /* number of dummy codes added */

@@ -438,52 +438,52 @@ public:
 
     idGameLocal();
 
-    virtual void			Init( void );
-    virtual void			Shutdown( void );
-    virtual void			SetLocalClient( int clientNum );
-    virtual void			ThrottleUserInfo( void );
-    virtual const idDict *	SetUserInfo( int clientNum, const idDict &userInfo, bool isClient, bool canModify );
-    virtual const idDict *	GetUserInfo( int clientNum );
-    virtual void			SetServerInfo( const idDict &serverInfo );
+    virtual void			Init( void ) override;
+    virtual void			Shutdown( void ) override;
+    virtual void			SetLocalClient( int clientNum ) override;
+    virtual void			ThrottleUserInfo( void ) override;
+    virtual const idDict *	SetUserInfo( int clientNum, const idDict &userInfo, bool isClient, bool canModify ) override;
+    virtual const idDict *	GetUserInfo( int clientNum ) override;
+    virtual void			SetServerInfo( const idDict &serverInfo ) override;
 
-    virtual const idDict &	GetPersistentPlayerInfo( int clientNum );
-    virtual void			SetPersistentPlayerInfo( int clientNum, const idDict &playerInfo );
-    virtual void			InitFromNewMap( const char *mapName, idRenderWorld *renderWorld, idSoundWorld *soundWorld, bool isServer, bool isClient, int randSeed );
-    virtual bool			InitFromSaveGame( const char *mapName, idRenderWorld *renderWorld, idSoundWorld *soundWorld, idFile *saveGameFile );
-    virtual void			SaveGame( idFile *saveGameFile );
-    virtual void			MapShutdown( void );
-    virtual void			CacheDictionaryMedia( const idDict *dict );
-    virtual void			SpawnPlayer( int clientNum );
-    virtual gameReturn_t	RunFrame( const usercmd_t *clientCmds );
-    virtual bool			Draw( int clientNum );
-    virtual escReply_t		HandleESC( idUserInterface **gui );
-    virtual idUserInterface	*StartMenu( void );
-    virtual const char *	HandleGuiCommands( const char *menuCommand );
-    virtual void			HandleMainMenuCommands( const char *menuCommand, idUserInterface *gui );
-    virtual allowReply_t	ServerAllowClient( int numClients, const char *IP, const char *guid, const char *password, char reason[MAX_STRING_CHARS] );
-    virtual void			ServerClientConnect( int clientNum, const char *guid );
-    virtual void			ServerClientBegin( int clientNum );
-    virtual void			ServerClientDisconnect( int clientNum );
-    virtual void			ServerWriteInitialReliableMessages( int clientNum );
-    virtual void			ServerWriteSnapshot( int clientNum, int sequence, idBitMsg &msg, byte *clientInPVS, int numPVSClients );
-    virtual bool			ServerApplySnapshot( int clientNum, int sequence );
-    virtual void			ServerProcessReliableMessage( int clientNum, const idBitMsg &msg );
-    virtual void			ClientReadSnapshot( int clientNum, int sequence, const int gameFrame, const int gameTime, const int dupeUsercmds, const int aheadOfServer, const idBitMsg &msg );
-    virtual bool			ClientApplySnapshot( int clientNum, int sequence );
-    virtual void			ClientProcessReliableMessage( int clientNum, const idBitMsg &msg );
-    virtual gameReturn_t	ClientPrediction( int clientNum, const usercmd_t *clientCmds, bool lastPredictFrame );
+    virtual const idDict &	GetPersistentPlayerInfo( int clientNum ) override;
+    virtual void			SetPersistentPlayerInfo( int clientNum, const idDict &playerInfo ) override;
+    virtual void			InitFromNewMap( const char *mapName, idRenderWorld *renderWorld, idSoundWorld *soundWorld, bool isServer, bool isClient, int randSeed ) override;
+    virtual bool			InitFromSaveGame( const char *mapName, idRenderWorld *renderWorld, idSoundWorld *soundWorld, idFile *saveGameFile ) override;
+    virtual void			SaveGame( idFile *saveGameFile ) override;
+    virtual void			MapShutdown( void ) override;
+    virtual void			CacheDictionaryMedia( const idDict *dict ) override;
+    virtual void			SpawnPlayer( int clientNum ) override;
+    virtual gameReturn_t	RunFrame( const usercmd_t *clientCmds ) override;
+    virtual bool			Draw( int clientNum ) override;
+    virtual escReply_t		HandleESC( idUserInterface **gui ) override;
+    virtual idUserInterface	*StartMenu( void ) override;
+    virtual const char *	HandleGuiCommands( const char *menuCommand ) override;
+    virtual void			HandleMainMenuCommands( const char *menuCommand, idUserInterface *gui ) override;
+    virtual allowReply_t	ServerAllowClient( int numClients, const char *IP, const char *guid, const char *password, char reason[MAX_STRING_CHARS] ) override;
+    virtual void			ServerClientConnect( int clientNum, const char *guid ) override;
+    virtual void			ServerClientBegin( int clientNum ) override;
+    virtual void			ServerClientDisconnect( int clientNum ) override;
+    virtual void			ServerWriteInitialReliableMessages( int clientNum ) override;
+    virtual void			ServerWriteSnapshot( int clientNum, int sequence, idBitMsg &msg, byte *clientInPVS, int numPVSClients ) override;
+    virtual bool			ServerApplySnapshot( int clientNum, int sequence ) override;
+    virtual void			ServerProcessReliableMessage( int clientNum, const idBitMsg &msg ) override;
+    virtual void			ClientReadSnapshot( int clientNum, int sequence, const int gameFrame, const int gameTime, const int dupeUsercmds, const int aheadOfServer, const idBitMsg &msg ) override;
+    virtual bool			ClientApplySnapshot( int clientNum, int sequence ) override;
+    virtual void			ClientProcessReliableMessage( int clientNum, const idBitMsg &msg ) override;
+    virtual gameReturn_t	ClientPrediction( int clientNum, const usercmd_t *clientCmds, bool lastPredictFrame ) override;
 
-    virtual void			GetClientStats( int clientNum, char *data, const int len );
-    virtual void			SwitchTeam( int clientNum, int team );
+    virtual void			GetClientStats( int clientNum, char *data, const int len ) override;
+    virtual void			SwitchTeam( int clientNum, int team ) override;
 
-    virtual bool			DownloadRequest( const char *IP, const char *guid, const char *paks, char urls[ MAX_STRING_CHARS ] );
+    virtual bool			DownloadRequest( const char *IP, const char *guid, const char *paks, char urls[ MAX_STRING_CHARS ] ) override;
 
-    virtual void				GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] );
+    virtual void				GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] ) override;
 
 
 
     //bc public
-    virtual bool			CanSave( void );
+    virtual bool			CanSave( void ) override;
 
 
     idStr					GetAutocomplete(  idStrList candidates, idStr partialString );

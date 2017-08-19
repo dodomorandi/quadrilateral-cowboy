@@ -102,6 +102,8 @@ public:
     {
         cpuid = CPUID_NONE;
     }
+    
+    virtual ~idSIMDProcessor() = default;
 
     cpuid_t							cpuid;
 
