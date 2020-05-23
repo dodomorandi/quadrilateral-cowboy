@@ -27,6 +27,7 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 #include "../idlib/precompiled.h"
+#include "SDL.h"
 #pragma hdrstop
 
 #include "../renderer/Image.h"
