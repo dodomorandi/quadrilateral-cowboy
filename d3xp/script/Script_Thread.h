@@ -75,6 +75,10 @@ extern const idEventDef EV_Thread_FadeOut;
 extern const idEventDef EV_Thread_FadeTo;
 extern const idEventDef EV_Thread_Restart;
 extern const idEventDef EV_Thread_rundeckcommand;
+extern const idEventDef EV_Thread_steam_addtimestat;
+extern const idEventDef EV_Thread_steam_getglobalstat;
+extern const idEventDef EV_Thread_steam_updatefriendtimes;
+extern const idEventDef EV_Thread_steam_setachievement;
 
 //bc
 extern const idEventDef EV_Thread_getClassEntity;
@@ -181,6 +185,10 @@ private:
     void						Event_lerp( float value1, float value2, float amount );
 
     void						Event_rundeckcommand( const char *command );
+    float						Event_steam_addtimestat( float arg1, float arg2 );
+    float						Event_steam_getglobalstat( const char *arg1 );
+    void						Event_steam_updatefriendtimes( float arg1 );
+    void						Event_steam_setachievement( const char *arg1 );
     void						Event_floatRound( float value, float round );
     const char *				Event_parseTime( float value );
     const char *				Event_parseTime2( float value );

@@ -99,6 +99,10 @@ const idEventDef EV_Thread_parseTime2( "parseTime2", "f", 's' );
 const idEventDef EV_Thread_parseTimeMS( "parseTimeMS", "d", 's' );
 const idEventDef EV_Thread_getString( "getString", "s", 's' );
 const idEventDef EV_Thread_rundeckcommand( "rundeckcommand", "s" );
+const idEventDef EV_Thread_steam_addtimestat( "steam_addtimestat", "ff", 'f' );
+const idEventDef EV_Thread_steam_getglobalstat( "steam_getglobalstat", "s", 'f'  );
+const idEventDef EV_Thread_steam_updatefriendtimes( "steam_updatefriendtimes", "f" );
+const idEventDef EV_Thread_steam_setachievement( "steam_setachievement", "s" );
 
 
 #ifdef _D3XP
@@ -209,6 +213,10 @@ EVENT( EV_Thread_Sine,					idThread::Event_GetSine )
 EVENT( EV_Thread_Cosine,				idThread::Event_GetCosine )
 EVENT( EV_Thread_lerp,					idThread::Event_lerp)
 EVENT( EV_Thread_rundeckcommand,		idThread::Event_rundeckcommand)
+EVENT( EV_Thread_steam_addtimestat,     idThread::Event_steam_addtimestat)
+EVENT( EV_Thread_steam_getglobalstat,   idThread::Event_steam_getglobalstat)
+EVENT( EV_Thread_steam_updatefriendtimes, idThread::Event_steam_updatefriendtimes)
+EVENT( EV_Thread_steam_setachievement,  idThread::Event_steam_setachievement)
 EVENT( EV_Thread_floatRound,			idThread::Event_floatRound)
 EVENT( EV_Thread_parseTime,				idThread::Event_parseTime)
 EVENT( EV_Thread_parseTime2,			idThread::Event_parseTime2)
@@ -1853,6 +1861,22 @@ void idThread::Event_GetCosine( float angle )
 void idThread::Event_rundeckcommand( const char *command )
 {
     gameLocal.RunDeckCommand( command );
+}
+
+float idThread::Event_steam_addtimestat( float arg1, float arg2 )
+{
+}
+
+float idThread::Event_steam_getglobalstat( const char *arg1 )
+{
+}
+
+void idThread::Event_steam_updatefriendtimes( float arg1 )
+{
+}
+
+void idThread::Event_steam_setachievement( const char *arg1 )
+{
 }
 
 void idThread::Event_lerp( float value1, float value2, float amount )
