@@ -29,6 +29,7 @@ If you have questions concerning this license or the applicable additional terms
 #ifdef USE_SDL
 
 #include "../idlib/precompiled.h"
+#include "SDL.h"
 
 #include "../idlib/containers/List.h"
 #include "../idlib/Heap.h"
